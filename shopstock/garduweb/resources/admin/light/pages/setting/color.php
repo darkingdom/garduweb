@@ -1,3 +1,4 @@
+<?php Flasher::flash(); ?>
 <div id="content">
     <div class="card mb-3">
         <div class="card-header">
