@@ -1,0 +1,7 @@
+.data {
+    overflow: auto;
+}
+
+#content {
+    padding: 20px 20px 180px;
+}

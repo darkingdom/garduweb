@@ -1,0 +1,13 @@
+.custom-tooltip-primary {
+    --bs-tooltip-bg: var(--bs-primary);
+}
+
+.custom-tooltip-danger {
+    --bs-tooltip-bg: var(--bs-danger);
+}
+
+.btn-xsm {
+    --bs-btn-padding-y: .25rem;
+    --bs-btn-padding-x: .5rem;
+    --bs-btn-font-size: .75rem;
+}
