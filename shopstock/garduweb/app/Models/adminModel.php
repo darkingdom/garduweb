@@ -29,6 +29,13 @@ class AdminModel
         return $this->db->single();
     }
 
+    public function getColorByID($data)
+    {
+        $this->db->query("SELECT * FROM `tb_color` WHERE id=:id LIMIT 1");
+        $this->db->bind('id', $data);
+        return $this->db->single();
+    }
+
 
     // END GET =====================================================================================================
 
@@ -206,6 +213,15 @@ class AdminModel
         return $this->db->rowCount();
     }
 
+    public function simpanColor($data)
+    {
+        $this->db->query("UPDATE tb_color SET hex_color=:hexcolor, nama_color=:namaColor WHERE id=:xid");
+        $this->db->bind('hexcolor', $data['txtHexColor']);
+        $this->db->bind('namaColor', $data['txtNamaColor']);
+        $this->db->bind('xid', $data['id']);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
 
     // END UPDATE DATA =============================================================================================
 
@@ -231,6 +247,15 @@ class AdminModel
         $this->db->bind('Bank', $data['txtNamaBank']);
         $this->db->bind('NoRekening', $data['txtNoRekening']);
         $this->db->bind('AN_pemilik', $data['txtAN_pemilik']);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
+    public function newColor($data)
+    {
+        $this->db->query("INSERT INTO `tb_color` (hex_color, nama_color) VALUES (:hexcolor, :namaColor)");
+        $this->db->bind('hexcolor', $data['txtHexColor']);
+        $this->db->bind('namaColor', $data['txtNamaColor']);
         $this->db->execute();
         return $this->db->rowCount();
     }
@@ -335,6 +360,14 @@ class AdminModel
     public function deleteBankByID($data)
     {
         $this->db->query("DELETE FROM `tb_bank` WHERE id=:id");
+        $this->db->bind('id', $data['id']);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
+    public function deleteColorByID($data)
+    {
+        $this->db->query("DELETE FROM `tb_color` WHERE id=:id");
         $this->db->bind('id', $data['id']);
         $this->db->execute();
         return $this->db->rowCount();

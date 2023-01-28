@@ -13,6 +13,7 @@ elseif ($page == 'bank') :
     $this->page->bank($data);
 elseif ($page == 'color') :
     if (isset($_GET['id'])) :
+        $data['xcolor'] = $this->model->getColorByID($_GET['id']);
     endif;
     $data['color'] = $this->model->getAllColor();
     $this->page->color($data);
@@ -216,7 +217,7 @@ elseif ($page == 'action') :
         if ($act == 'simpan') :
             if (isset($post['btn-simpan'])) :
                 if (!empty($post['txtHexColor']) && !empty($post['txtNamaColor'])) :
-                    $simpan = $this->modal->newColor($post);
+                    $simpan = $this->model->newColor($post);
                     if ($simpan > 0) :
                         Flasher::setFlash("BERHASIL", 'success');
                         $this->page->redirect('admin/setting/color/');
@@ -229,10 +230,10 @@ elseif ($page == 'action') :
                     $this->page->redirect('admin/setting/color/');
                 endif;
             endif;
-        elseif ($act == 'edit') :
-            if (isset($post['btn-simpan'])) :
+        elseif ($act == 'update') :
+            if (isset($post['btn-update'])) :
                 if (!empty($post['txtHexColor']) && !empty($post['txtNamaColor'])) :
-                    $simpan = $this->modal->simpanColor($post);
+                    $simpan = $this->model->simpanColor($post);
                     if ($simpan > 0) :
                         Flasher::setFlash("BERHASIL", 'success');
                         $this->page->redirect('admin/setting/color/');
@@ -245,7 +246,7 @@ elseif ($page == 'action') :
                     $this->page->redirect('admin/setting/color/');
                 endif;
             endif;
-        elseif ($act == 'hapus') :
+        elseif ($act == 'delete') :
             $hapus = $this->model->deleteColorByID($post);
             if ($hapus > 0) :
                 Flasher::setFlash("BERHASIL", 'success');
@@ -254,6 +255,12 @@ elseif ($page == 'action') :
                 Flasher::setFlash("GAGAL", 'danger');
                 $this->page->redirect('admin/setting/color/');
             endif;
+        elseif ($act == 'multi-delete') :
+            foreach ($_POST['chkID'] as $id) :
+                $data['id'] = $id;
+                $this->model->deleteColorByID($data);
+            endforeach;
+            $this->page->redirect('admin/setting/color/');
         else :
             $this->page->redirect('admin/setting/color/');
         endif;
