@@ -277,23 +277,14 @@ class AdminController extends Controller
         elseif ($page == 'lihat-semua') :
             $data[] = '';
             $this->page->lihatPajak($data);
-
         endif;
     }
     // =============================================================== END QR CODE
 
     // =============================================================== START QR CODE
-    public function qr($page = '', $act = '', $uniq = '')
+    public function qr($page = '', $subpage = '', $act = '', $uniq = '')
     {
-        $this->auth();
-        if ($page == 'generate') :
-            $data[] = '';
-            Flasher::setFlash("BERHASIL", 'success');
-            $this->page->generateQR($data);
-        elseif ($page == 'lihat-semua') :
-            $data[] = '';
-            $this->page->lihatQR($data);
-        endif;
+        include "component/admin/qr.php";
     }
     // =============================================================== END QR CODE
 

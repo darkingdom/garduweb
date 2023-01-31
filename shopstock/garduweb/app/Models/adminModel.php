@@ -52,6 +52,25 @@ class AdminModel
         return $this->db->resultSet();
     }
 
+    public function getAllGroupQR()
+    {
+        $this->db->query("SELECT DISTINCT group_qr FROM `tb_qr`");
+        return $this->db->resultSet();
+    }
+
+    public function getAllQR()
+    {
+        $this->db->query("SELECT * FROM `tb_qr`");
+        return $this->db->resultSet();
+    }
+
+    public function getAllQRByGroup($data)
+    {
+        $this->db->query("SELECT * FROM `tb_qr` WHERE group_qr=:group_qr");
+        $this->db->bind('group_qr', (string) $data);
+        return $this->db->resultSet();
+    }
+
     // public function getAllOngkosKirim()
     // {
     //     $this->db->query("SELECT * FROM `ongkos_kirim` ORDER BY propinsi ASC");
@@ -260,96 +279,20 @@ class AdminModel
         return $this->db->rowCount();
     }
 
-    // public function simpanOngkosKirim($data)
-    // {
-    //     $slug = Slug::textToSlug($data['txtPropinsi']);
-    //     $this->db->query("INSERT INTO `ongkos_kirim` (slug, propinsi, ongkir) VALUES (:slug, :propinsi, :ongkir)");
-    //     $this->db->bind('slug', $slug);
-    //     $this->db->bind('propinsi', $data['txtPropinsi']);
-    //     $this->db->bind('ongkir', $data['txtOngkir']);
-    //     $this->db->execute();
-    //     return $this->db->rowCount();
-    // }
+    public function newQR($data)
+    {
+        $token = Auth::token();
+        $this->db->query("INSERT INTO `tb_qr` (tanggal_generate,qr_code,group_qr) VALUES (NOW(),'$token',:group_qr)");
+        $this->db->bind('group_qr', $data);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
 
-    // public function generateVoucher($data)
-    // {
-    //     $token = Auth::token();
-    //     $this->db->query("INSERT INTO `voucher` (tanggal_buat, token, nominal, harga, pemilik, status) VALUES (NOW(), :token, :nominal, :harga, :pemilik, '0')");
-    //     $this->db->bind('token', $data['kode'] . $token);
-    //     $this->db->bind('nominal', $data['voucher']);
-    //     $this->db->bind('harga', $data['voucher']);
-    //     $this->db->bind('pemilik', $data['txtNoAnggota']);
-    //     $this->db->execute();
-    // }
-
-    // public function simpanNewPIN($data)
-    // {
-    //     $token = Auth::token();
-    //     $this->db->query("INSERT INTO `pin` (tanggal_buat,no_anggota,token,pin,pemilik,status,harga,group_pin) VALUES (NOW(),:no_anggota,:token,:pin,:pemilik,'0',:harga,:group_pin)");
-    //     $this->db->bind('no_anggota', $data['newid']);
-    //     $this->db->bind('token', $data['kode'] . $token);
-    //     $this->db->bind('pin', $data['pin']);
-    //     $this->db->bind('pemilik', $data['txtNoAnggota']);
-    //     $this->db->bind('harga', $data['harga']);
-    //     $this->db->bind('group_pin', $data['group']);
-    //     $this->db->execute();
-    // }
-
-    // public function kirimPesan($data)
-    // {
-    //     $this->db->query("INSERT INTO `pesan` (tanggal_kirim, pengirim, tujuan, judul, isi_pesan, dibaca) VALUES (NOW(),:pengirim,:tujuan,:judul,:isi_pesan,'0')");
-    //     $this->db->bind('pengirim', 'admin');
-    //     $this->db->bind('tujuan', $data['no_anggota']);
-    //     $this->db->bind('judul', $data['txtJudul']);
-    //     $this->db->bind('isi_pesan', $data['txtIsiPesan']);
-    //     $this->db->execute();
-    // }
 
     // public function simpanMedia($fileName)
     // {
     //     $this->db->query("INSERT INTO `media` (filename,type)VALUES(:filename,'image')");
     //     $this->db->bind('filename', $fileName);
-    //     $this->db->execute();
-    //     return $this->db->rowCount();
-    // }
-
-    // public function simpanKategoriProduk($data)
-    // {
-    //     $slug = Slug::textToSlug($data['txtKategori']);
-    //     $this->db->query("INSERT INTO `kategori_produk` (kategori, slug) VALUES (:kategori, :slug)");
-    //     $this->db->bind('slug', $slug);
-    //     $this->db->bind('kategori', $data['txtKategori']);
-    //     $this->db->execute();
-    //     return $this->db->rowCount();
-    // }
-
-    // public function simpanProduk($data)
-    // {
-    //     $slug = Slug::textToSlug($data['txtProduk']);
-    //     $this->db->query("INSERT INTO `produk` (nama_produk, slug, harga, berat, keterangan,
-    //                                             url_produk1, url_produk2, url_produk3,
-    //                                             bonus_level1, bonus_level2, bonus_level3,
-    //                                             bonus_level4, bonus_level5, id_kategori_produk) 
-    //                                         VALUES (
-    //                                             :produk, :slug, :harga, :berat, :keterangan,
-    //                                             :url1, :url2, :url3,
-    //                                             :bonus1, :bonus2, :bonus3, :bonus4, :bonus5,
-    //                                             :kategori
-    //                                             )");
-    //     $this->db->bind('produk', $data['txtProduk']);
-    //     $this->db->bind('slug', $slug);
-    //     $this->db->bind('harga', $data['txtHarga']);
-    //     $this->db->bind('berat', $data['txtBerat']);
-    //     $this->db->bind('keterangan', $data['txtKeterangan']);
-    //     $this->db->bind('url1', $data['txtURL1']);
-    //     $this->db->bind('url2', $data['txtURL2']);
-    //     $this->db->bind('url3', $data['txtURL3']);
-    //     $this->db->bind('bonus1', $data['txtBonus1']);
-    //     $this->db->bind('bonus2', $data['txtBonus2']);
-    //     $this->db->bind('bonus3', $data['txtBonus3']);
-    //     $this->db->bind('bonus4', $data['txtBonus4']);
-    //     $this->db->bind('bonus5', $data['txtBonus5']);
-    //     $this->db->bind('kategori', $data['selKategori']);
     //     $this->db->execute();
     //     return $this->db->rowCount();
     // }

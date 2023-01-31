@@ -249,6 +249,11 @@ class AdminView extends Controller
         $this->view('pages/qr/lihat-semua', $data);
         $this->footer();
     }
+
+    public function printQR($data = [])
+    {
+        $this->view('pages/qr/print', $data);
+    }
     // ========================================================== END QR CODE
 
 
