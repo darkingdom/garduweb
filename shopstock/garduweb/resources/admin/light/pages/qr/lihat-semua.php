@@ -4,10 +4,10 @@
             Filter
         </div>
         <div class="card-body">
-            <form action="<?= BASEURL ?>/admin/qr/action/qr/filter/" method="POST">
+            <form id="frmFilter" action="<?= BASEURL ?>/admin/qr/action/qr/filter/" method="POST">
                 <div class="row">
                     <div class="col-sm-3">
-                        <select class="form-select" id="selGroup" name="selGroup">
+                        <select class="form-select" id="selGroup" name="selGroup" onchange="document.getElementById('frmFilter').submit()">
                             <option value="lihat-semua">Tampilkan Semua</option>
                             <?php foreach ($data->group as $group) : ?>
                                 <option value="<?= $group->group_qr ?>" <?php if ($group->group_qr == @$data->select_group) echo "selected"; ?>><?= $group->group_qr ?></option>
@@ -15,8 +15,7 @@
                         </select>
                     </div>
                     <div class="col-sm-5">
-                        <button class="btn btn-primary" name="btn-filter" type="submit">Filter</button>
-                        <a href="#" class="btn btn-warning"><i class="fa-solid fa-print"></i> Print</a>
+                        <a href="<?= BASEURL ?>/admin/qr/print/?q=<?= @$_GET['q'] ?>" target="_blank" class="btn btn-warning"><i class="fa-solid fa-print"></i> Print</a>
                     </div>
                 </div>
             </form>
@@ -27,7 +26,7 @@
             Tabel QR CODE
         </div>
         <div class="card-body">
-            <form>
+            <form action="<?= BASEURL ?>/admin/qr/action/qr/multi-delete/" method="POST">
                 <table id="table" data-toggle="table" data-pagination="false" data-search="false" data-search-align="right" paginationHAlign="right">
                     <thead>
                         <tr>
@@ -61,9 +60,11 @@
                                         <a href="#" class="btn btn-success btn-sm" data-bs-toggle="tooltip" data-bs-title="Print">
                                             <i class="fa-solid fa-print"></i>
                                         </a>
-                                        <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" data-bs-title="Delete">
-                                            <i class="fa-solid fa-trash-can"></i>
-                                        </a>
+                                        <span class="media-delete" data-id="<?= $qr->id ?>" data-bs-toggle="modal" data-bs-target="#modalDelete">
+                                            <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" data-bs-title="Delete">
+                                                <i class="fa-solid fa-trash-can"></i>
+                                            </a>
+                                        </span>
                                     </div>
                                 </td>
                             </tr>
@@ -77,4 +78,20 @@
             </form>
         </div>
     </div>
+    <?php
+    include COMPONENTADM . "/component/atom/modalDelete.php";
+    ?>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $(".media-delete").on("click", function() {
+            const id = $(this).data("id");
+            $("#modal-delete-id").val(id);
+            $("#modalDeleteURL").attr(
+                "action",
+                baseurl + "/admin/qr/action/qr/delete/"
+            );
+        });
+    });
+</script>

@@ -20,7 +20,7 @@ rincian pajak tahunan semua
                                 Pajak bulan ini
                             </div>
                             <div class="fs-4">
-                                35.000
+                                <?= Numeric::numberFormat($data->pajak_bulan_ini->total) ?>
                             </div>
                         </div>
                     </div>
@@ -32,7 +32,7 @@ rincian pajak tahunan semua
                                 Pajak tahun ini
                             </div>
                             <div class="fs-4">
-                                235.000
+                                <?= Numeric::numberFormat($data->pajak_tahun_ini->total) ?>
                             </div>
                         </div>
                     </div>
@@ -52,73 +52,73 @@ rincian pajak tahunan semua
                         <li class="list-group-item">
                             <div class="d-flex justify-content-between">
                                 <div>Januari</div>
-                                <div>0</div>
+                                <div><?= Numeric::numberFormat($data->pajak_bulan_jan->total) ?></div>
                             </div>
                         </li>
                         <li class="list-group-item">
                             <div class="d-flex justify-content-between">
                                 <div>Februari</div>
-                                <div>0</div>
+                                <div><?= Numeric::numberFormat($data->pajak_bulan_feb->total) ?></div>
                             </div>
                         </li>
                         <li class="list-group-item">
                             <div class="d-flex justify-content-between">
                                 <div>Maret</div>
-                                <div>0</div>
+                                <div><?= Numeric::numberFormat($data->pajak_bulan_mar->total) ?></div>
                             </div>
                         </li>
                         <li class="list-group-item">
                             <div class="d-flex justify-content-between">
                                 <div>April</div>
-                                <div>0</div>
+                                <div><?= Numeric::numberFormat($data->pajak_bulan_apr->total) ?></div>
                             </div>
                         </li>
                         <li class="list-group-item">
                             <div class="d-flex justify-content-between">
                                 <div>Mei</div>
-                                <div>0</div>
+                                <div><?= Numeric::numberFormat($data->pajak_bulan_mei->total) ?></div>
                             </div>
                         </li>
                         <li class="list-group-item">
                             <div class="d-flex justify-content-between">
                                 <div>Juni</div>
-                                <div>0</div>
+                                <div><?= Numeric::numberFormat($data->pajak_bulan_jun->total) ?></div>
                             </div>
                         </li>
                         <li class="list-group-item">
                             <div class="d-flex justify-content-between">
                                 <div>Juli</div>
-                                <div>0</div>
+                                <div><?= Numeric::numberFormat($data->pajak_bulan_jul->total) ?></div>
                             </div>
                         </li>
                         <li class="list-group-item">
                             <div class="d-flex justify-content-between">
                                 <div>Agustus</div>
-                                <div>0</div>
+                                <div><?= Numeric::numberFormat($data->pajak_bulan_aug->total) ?></div>
                             </div>
                         </li>
                         <li class="list-group-item">
                             <div class="d-flex justify-content-between">
                                 <div>September</div>
-                                <div>0</div>
+                                <div><?= Numeric::numberFormat($data->pajak_bulan_sep->total) ?></div>
                             </div>
                         </li>
                         <li class="list-group-item">
                             <div class="d-flex justify-content-between">
                                 <div>Oktober</div>
-                                <div>12.000</div>
+                                <div><?= Numeric::numberFormat($data->pajak_bulan_okt->total) ?></div>
                             </div>
                         </li>
                         <li class="list-group-item">
                             <div class="d-flex justify-content-between">
                                 <div>Nopember</div>
-                                <div>18.000</div>
+                                <div><?= Numeric::numberFormat($data->pajak_bulan_nop->total) ?></div>
                             </div>
                         </li>
                         <li class="list-group-item">
                             <div class="d-flex justify-content-between">
                                 <div>Desember</div>
-                                <div>5.000</div>
+                                <div><?= Numeric::numberFormat($data->pajak_bulan_des->total) ?></div>
                             </div>
                         </li>
 
@@ -136,26 +136,38 @@ rincian pajak tahunan semua
                     <ul class="list-group list-group-flush" style="font-size: 14px;">
                         <li class="list-group-item">
                             <div class="d-flex justify-content-between">
-                                <div>2019</div>
-                                <div>125.000</div>
+                                <div><?= date('Y') - 5 ?></div>
+                                <div><?= Numeric::numberFormat($data->pajak_tahun_5->total) ?></div>
                             </div>
                         </li>
                         <li class="list-group-item">
                             <div class="d-flex justify-content-between">
-                                <div>2020</div>
-                                <div>325.000</div>
+                                <div><?= date('Y') - 4 ?></div>
+                                <div><?= Numeric::numberFormat($data->pajak_tahun_4->total) ?></div>
                             </div>
                         </li>
                         <li class="list-group-item">
                             <div class="d-flex justify-content-between">
-                                <div>2021</div>
-                                <div>158.000</div>
+                                <div><?= date('Y') - 3 ?></div>
+                                <div><?= Numeric::numberFormat($data->pajak_tahun_3->total) ?></div>
                             </div>
                         </li>
                         <li class="list-group-item">
                             <div class="d-flex justify-content-between">
-                                <div>2022</div>
-                                <div>200.000</div>
+                                <div><?= date('Y') - 2 ?></div>
+                                <div><?= Numeric::numberFormat($data->pajak_tahun_2->total) ?></div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-between">
+                                <div><?= date('Y') - 1 ?></div>
+                                <div><?= Numeric::numberFormat($data->pajak_tahun_1->total) ?></div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-between">
+                                <div><?= date('Y') ?></div>
+                                <div><?= Numeric::numberFormat($data->pajak_tahun_ini->total) ?></div>
                             </div>
                         </li>
                     </ul>

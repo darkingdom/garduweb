@@ -36,6 +36,20 @@ class AdminModel
         return $this->db->single();
     }
 
+    public function getGudangByID($data)
+    {
+        $this->db->query("SELECT * FROM `tb_gudang` WHERE id=:id LIMIT 1");
+        $this->db->bind('id', $data);
+        return $this->db->single();
+    }
+
+    public function getEtalaseByID($data)
+    {
+        $this->db->query("SELECT * FROM `tb_etalase` WHERE id=:id LIMIT 1");
+        $this->db->bind('id', $data);
+        return $this->db->single();
+    }
+
 
     // END GET =====================================================================================================
 
@@ -71,65 +85,23 @@ class AdminModel
         return $this->db->resultSet();
     }
 
-    // public function getAllOngkosKirim()
-    // {
-    //     $this->db->query("SELECT * FROM `ongkos_kirim` ORDER BY propinsi ASC");
-    //     return $this->db->resultSet();
-    // }
+    public function getAllPajak()
+    {
+        $this->db->query("SELECT * FROM `tb_pajak` ORDER BY id DESC");
+        return $this->db->resultSet();
+    }
 
-    // public function getAllMember()
-    // {
-    //     $this->db->query("SELECT * FROM `member`");
-    //     return $this->db->resultSet();
-    // }
+    public function getAllGudang()
+    {
+        $this->db->query("SELECT * FROM `tb_gudang` ORDER BY id DESC");
+        return $this->db->resultSet();
+    }
 
-    // public function getAllWallet()
-    // {
-    //     $this->db->query("SELECT * FROM `wallet`");
-    //     return $this->db->resultSet();
-    // }
-
-    // public function getAllMedia()
-    // {
-    //     $this->db->query("SELECT * FROM `media` ORDER BY id DESC");
-    //     return $this->db->resultSet();
-    // }
-
-    // public function getAllKategoriProduk()
-    // {
-    //     $this->db->query("SELECT * FROM `kategori_produk` ORDER BY id DESC");
-    //     return $this->db->resultSet();
-    // }
-
-    // public function getAllProduk()
-    // {
-    //     $this->db->query("SELECT * FROM `produk` ORDER BY id DESC");
-    //     return $this->db->resultSet();
-    // }
-
-    // public function getAllOrders()
-    // {
-    //     $this->db->query("SELECT * FROM `penjualan` WHERE barang_dikirim!='1' && barang_diterima!='1' ORDER BY id DESC");
-    //     return $this->db->resultSet();
-    // }
-
-    // public function getAllOrdersTerkirim()
-    // {
-    //     $this->db->query("SELECT * FROM `penjualan` WHERE barang_dikirim='1' ORDER BY id DESC");
-    //     return $this->db->resultSet();
-    // }
-
-    // public function getAllPIN()
-    // {
-    //     $this->db->query("SELECT * FROM `pin`");
-    //     return $this->db->resultSet();
-    // }
-
-    // public function getAllVoucher()
-    // {
-    //     $this->db->query("SELECT * FROM `voucher`");
-    //     return $this->db->resultSet();
-    // }
+    public function getAllEtalase()
+    {
+        $this->db->query("SELECT * FROM `tb_etalase` ORDER BY id DESC");
+        return $this->db->resultSet();
+    }
 
     // END GET ALL =================================================================================================
 
@@ -179,6 +151,23 @@ class AdminModel
         $this->db->bind('uuid', $uuid);
         return $this->db->single();
     }
+
+
+    public function countPajakBulanan($data)
+    {
+        $this->db->query("SELECT SUM(nominal) AS total FROM `tb_pajak` WHERE MONTH(tanggal_pajak)=:bulan && YEAR(tanggal_pajak)=:tahun");
+        $this->db->bind('bulan', (string)$data['bulan']);
+        $this->db->bind('tahun', (string)$data['tahun']);
+        return $this->db->single();
+    }
+
+    public function countPajakTahunan($data)
+    {
+        $this->db->query("SELECT SUM(nominal) AS total FROM `tb_pajak` WHERE YEAR(tanggal_pajak)=:tahun");
+        $this->db->bind('tahun', (string)$data['tahun']);
+        return $this->db->single();
+    }
+
     // END COUNT DATA ==============================================================================================
 
     // UPDATE DATA =================================================================================================
@@ -242,6 +231,35 @@ class AdminModel
         return $this->db->rowCount();
     }
 
+    public function simpanPajak($data)
+    {
+        $this->db->query("UPDATE tb_setting SET pajak=:pajak, jenis_pajak=:jenis_pajak");
+        $this->db->bind('pajak', $data['txtPajak']);
+        $this->db->bind('jenis_pajak', $data['selJenisPajak']);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
+    public function updateGudang($data)
+    {
+        $this->db->query("UPDATE tb_gudang SET nama_gudang=:nama_gudang, lokasi=:lokasi WHERE id=:id");
+        $this->db->bind('nama_gudang', $data['txtNamaGudang']);
+        $this->db->bind('lokasi', $data['txtLokasi']);
+        $this->db->bind('id', $data['id']);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
+    public function updateEtalase($data)
+    {
+        $this->db->query("UPDATE tb_etalase SET id_gudang=:id_gudang, nama_etalase=:etalase WHERE id=:id");
+        $this->db->bind('id_gudang', $data['selGudang']);
+        $this->db->bind('etalase', $data['txtNamaEtalase']);
+        $this->db->bind('id', $data['id']);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
     // END UPDATE DATA =============================================================================================
 
     // CREATE ======================================================================================================
@@ -288,6 +306,24 @@ class AdminModel
         return $this->db->rowCount();
     }
 
+    public function newGudang($data)
+    {
+        $this->db->query("INSERT INTO `tb_gudang` (nama_gudang,lokasi) VALUES (:nama_gudang,:lokasi)");
+        $this->db->bind('nama_gudang', $data['txtNamaGudang']);
+        $this->db->bind('lokasi', $data['txtLokasi']);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
+    public function newEtalase($data)
+    {
+        $this->db->query("INSERT INTO `tb_etalase` (id_gudang,nama_etalase) VALUES (:id_gudang,:etalase)");
+        $this->db->bind('id_gudang', $data['selGudang']);
+        $this->db->bind('etalase', $data['txtNamaEtalase']);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
 
     // public function simpanMedia($fileName)
     // {
@@ -316,43 +352,40 @@ class AdminModel
         return $this->db->rowCount();
     }
 
-    // public function deleteOngkosKirim($data)
-    // {
-    //     $this->db->query("DELETE FROM `ongkos_kirim` WHERE id=:id");
-    //     $this->db->bind('id', $data);
-    //     $this->db->execute();
-    //     return $this->db->rowCount();
-    // }
+    public function deleteQRByID($data)
+    {
+        $this->db->query("DELETE FROM `tb_qr` WHERE id=:id");
+        $this->db->bind('id', $data['id']);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
 
-    // public function deleteMemberByID($data)
-    // {
-    //     $this->db->query("DELETE FROM `member` WHERE id=:id");
-    //     $this->db->bind('id', $data);
-    //     $this->db->execute();
-    //     return $this->db->rowCount();
-    // }
+    public function deleteGudangByID($data)
+    {
+        $this->db->query("DELETE FROM `tb_gudang` WHERE id=:id");
+        $this->db->bind('id', $data['id']);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
 
-    // public function deleteKategoriProduk($data)
-    // {
-    //     $this->db->query("DELETE FROM `kategori_produk` WHERE id=:id");
-    //     $this->db->bind('id', $data);
-    //     $this->db->execute();
-    //     return $this->db->rowCount();
-    // }
+    public function deleteEtalaseByID($data)
+    {
+        $this->db->query("DELETE FROM `tb_etalase` WHERE id=:id");
+        $this->db->bind('id', $data['id']);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
 
-    // public function deletePINByID($data)
-    // {
-    //     $this->db->query("DELETE FROM `pin` WHERE id=:id");
-    //     $this->db->bind('id', $data);
-    //     $this->db->execute();
-    // }
-
-    // public function deleteVoucherByID($data)
-    // {
-    //     $this->db->query("DELETE FROM `voucher` WHERE id=:id");
-    //     $this->db->bind('id', $data);
-    //     $this->db->execute();
-    // }
 
     // END DELETE DATA =============================================================================================
+
+    // START STATIC DATA =============================================================================================
+    static public function staticGudangByID($data)
+    {
+        $db = new Database();
+        $db->query("SELECT * FROM `tb_gudang` WHERE id=:id LIMIT 1");
+        $db->bind('id', $data);
+        return $db->single();
+    }
+    // END STATIC DATA =============================================================================================
 }

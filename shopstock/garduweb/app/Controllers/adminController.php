@@ -238,7 +238,8 @@ class AdminController extends Controller
     // =============================================================== END KASIR
 
     // =============================================================== START GUDANG
-    public function gudang($page = '', $act = '', $uniq = '', $index = '')
+    // public function gudang($page = '', $act = '', $uniq = '', $index = '')
+    public function gudang($page = '', $subpage = '', $act = '', $uniq = '')
     {
         // $this->auth();
         // if ($page == 'general') :
@@ -264,22 +265,12 @@ class AdminController extends Controller
     }
     // =============================================================== END GUDANG
 
-    // =============================================================== START QR CODE
-    public function pajak($page = '', $act = '', $uniq = '')
+    // =============================================================== START PAJAK
+    public function pajak($page = '', $subpage = '', $act = '', $uniq = '')
     {
-        $this->auth();
-        if ($page == 'general') :
-            $data[] = '';
-            $this->page->pajakSetting($data);
-        elseif ($page == 'pajak') :
-            $data[] = '';
-            $this->page->pajak($data);
-        elseif ($page == 'lihat-semua') :
-            $data[] = '';
-            $this->page->lihatPajak($data);
-        endif;
+        include "component/admin/pajak.php";
     }
-    // =============================================================== END QR CODE
+    // =============================================================== END PAJAK
 
     // =============================================================== START QR CODE
     public function qr($page = '', $subpage = '', $act = '', $uniq = '')
@@ -287,122 +278,6 @@ class AdminController extends Controller
         include "component/admin/qr.php";
     }
     // =============================================================== END QR CODE
-
-    // =============================================================== START PIN
-    // public function pin($page = '', $act = '', $uniq = '')
-    // {
-    //     $this->auth();
-    //     if ($page == 'generate') :
-    //         $data['setting'] = $this->model->getSetting();
-    //         $this->page->generatePIN($data);
-    //     elseif ($page == 'lihat-pin') :
-    //         $data['pin'] = $this->model->getAllPIN();
-    //         $this->page->lihatPIN($data);
-
-    //     //---- ACTION
-    //     elseif ($page == 'action') :
-    //         $post = $_POST;
-    //         if ($act == 'generate-simpan') :
-    //             //cek form
-    //             //cek anggota
-    //             //cek array
-    //             //cek lastnumber
-    //             //simpan
-    //             $setting = $this->model->getSetting();
-    //             $post['harga'] = $setting->harga_pin;
-    //             $post['group'] = Auth::OTP(4);
-    //             if ($post['txtNoAnggota'] != '') :
-    //                 $anggota = $this->model->countAnggota($post)->total;
-    //                 if ($anggota > 0) :
-    //                     if ($post['txtJumlah'] != '' && $post['txtJumlah'] != 0) :
-    //                         for ($i = 1; $i <= $post['txtJumlah']; $i++) :
-    //                             $id_anggota = $this->model->getLastPIN()->anggota;
-    //                             $id_number = (int)Slug::cleanNumber($id_anggota);
-    //                             $newid = $id_number + 1;
-    //                             $id = strlen($newid);
-    //                             if ($id == 1) {
-    //                                 $nol = "00000";
-    //                             } else if ($id == 2) {
-    //                                 $nol = "0000";
-    //                             } else if ($id == 3) {
-    //                                 $nol = "000";
-    //                             } else if ($id == 4) {
-    //                                 $nol = "00";
-    //                             } else if ($id >= 5) {
-    //                                 $nol = "0";
-    //                             }
-    //                             $post['pin'] = Auth::OTP(4);
-    //                             $post['newid'] = $setting->prefix_id . $nol . $newid;
-    //                             $this->model->simpanNewPIN($post);
-    //                         endfor;
-    //                         Flasher::setFlash("BERHASIL", 'success');
-    //                     endif;
-    //                 endif;
-    //             endif;
-    //             $this->page->redirect('admin/pin/generate/');
-    //         elseif ($act == 'hapus-pin') :
-    //             $this->model->deletePINByID($post['id']);
-    //             // Flasher::setFlash("BERHASIL", 'success');
-    //             $this->page->redirect('admin/pin/lihat-pin/');
-    //         endif;
-    //     endif;
-    // }
-    // =============================================================== END PIN
-
-    // =============================================================== START VOUCHER
-    // public function voucher($page = '', $act = '', $uniq = '')
-    // {
-    //     $this->auth();
-    //     if ($page == 'generate') :
-    //         $this->page->generateVoucher();
-    //     elseif ($page == 'lihat-voucher') :
-    //         $data['voucher'] = $this->model->getAllVoucher();
-    //         $this->page->lihatVoucher($data);
-
-    //     //---- ACTION
-    //     elseif ($page == 'action') :
-    //         $post = $_POST;
-    //         if ($act == 'generate-simpan') :
-    //             //cek form
-    //             //cek anggota 
-    //             //array
-    //             //simpan
-    //             if ($post['txtNoAnggota'] != '') :
-    //                 $anggota = $this->model->countAnggota($post)->total;
-    //                 if ($anggota > 0) :
-    //                     if ($post['txtV5'] != '' && $post['txtV5'] != 0) :
-    //                         for ($i = 1; $i <= $post['txtV5']; $i++) :
-    //                             $post['voucher'] = "5000";
-    //                             $post['kode'] = "v5";
-    //                             $this->model->generateVoucher($post);
-    //                         endfor;
-    //                     endif;
-    //                     if ($post['txtV10'] != '' && $post['txtV10'] != 0) :
-    //                         for ($i = 1; $i <= $post['txtV10']; $i++) :
-    //                             $post['voucher'] = "10000";
-    //                             $post['kode'] = "v10";
-    //                             $this->model->generateVoucher($post);
-    //                         endfor;
-    //                     endif;
-    //                     Flasher::setFlash("BERHASIL", 'success');
-    //                 else :
-    //                     Flasher::setFlash("GAGAL", 'danger');
-    //                 endif;
-    //             else :
-    //                 Flasher::setFlash("No Anggota tidak boleh kosong", 'danger');
-    //             endif;
-    //             $this->page->redirect('admin/voucher/generate/');
-    //         elseif ($act == 'hapus-voucher') :
-    //             $this->model->deleteVoucherByID($post['id']);
-    //             $this->page->redirect('admin/voucher/lihat-voucher/');
-    //         else :
-    //             $this->dashboard();
-    //         endif;
-    //     else :
-    //         $this->dashboard();
-    //     endif;
-    // }
-    // =============================================================== END VOUCHER
 
     // =============================================================== START SETTING
     public function setting($page = '', $subpage = '', $act = '', $uniq = '')

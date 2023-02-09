@@ -75,6 +75,12 @@
 
     <div class="menu-item">
         <div class="label-menu-item">
+            <a href="<?= BASEURL ?>/admin/brand/promo/">Promo Diskon</a>
+        </div>
+    </div>
+
+    <div class="menu-item">
+        <div class="label-menu-item">
             <a href="<?= BASEURL ?>/admin/brand/general/">Merek / Brand</a>
         </div>
     </div>

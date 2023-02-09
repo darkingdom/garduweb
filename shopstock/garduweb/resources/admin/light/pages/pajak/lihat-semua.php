@@ -8,21 +8,23 @@
             <table id="table" data-toggle="table" data-pagination="true" data-pagination-detail-h-align="right" data-search="false" data-search-align="right" paginationHAlign="right">
                 <thead>
                     <tr>
-                        <!-- <th data-align="center" data-width="40"><input type="checkbox" onchange="checkAll(this)" name="chk[]"></th> -->
                         <th data-sortable="true">Tanggal</th>
                         <th data-sortable="true">Invoice</th>
                         <th data-sortable="true" data-align="right">Nominal</th>
-                        <!-- <th></th> -->
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <!-- <td></td> -->
-                        <td>2022-11-24 09:26:23</td>
-                        <td>656133577</td>
-                        <td>2.200</td>
-                        <!-- <td></td> -->
-                    </tr>
+                    <?php
+                    foreach ($data->pajak as $pajak) :
+                    ?>
+                        <tr>
+                            <td><?= $pajak->tanggal_pajak ?></td>
+                            <td><?= $pajak->no_invoice ?></td>
+                            <td><?= Numeric::numberFormat($pajak->nominal) ?></td>
+                        </tr>
+                    <?php
+                    endforeach;
+                    ?>
                 </tbody>
             </table>
             <!-- <div class="mt-2 border-top pt-2">
