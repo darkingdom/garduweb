@@ -115,5 +115,3 @@ elseif ($page == 'action') :
         endif;
     endif;
 endif;
-    
-    // $data['tab'] = 'action';

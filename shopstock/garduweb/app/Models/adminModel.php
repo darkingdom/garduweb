@@ -50,6 +50,13 @@ class AdminModel
         return $this->db->single();
     }
 
+    public function getKasirByID($data)
+    {
+        $this->db->query("SELECT * FROM `tb_kasir` WHERE id=:id LIMIT 1");
+        $this->db->bind('id', $data);
+        return $this->db->single();
+    }
+
 
     // END GET =====================================================================================================
 
@@ -100,6 +107,12 @@ class AdminModel
     public function getAllEtalase()
     {
         $this->db->query("SELECT * FROM `tb_etalase` ORDER BY id DESC");
+        return $this->db->resultSet();
+    }
+
+    public function getAllKasir()
+    {
+        $this->db->query("SELECT * FROM `tb_kasir` ORDER BY id DESC");
         return $this->db->resultSet();
     }
 
@@ -260,6 +273,19 @@ class AdminModel
         return $this->db->rowCount();
     }
 
+    public function updateKasir($data)
+    {
+        $this->db->query("UPDATE tb_kasir SET nama_kasir=:nama_kasir, alamat=:alamat, no_hp=:no_hp, username=:username, password=:password WHERE id=:id");
+        $this->db->bind('nama_kasir', $data['txtNamaKasir']);
+        $this->db->bind('alamat', $data['txtAlamat']);
+        $this->db->bind('no_hp', $data['txtNoHP']);
+        $this->db->bind('username', $data['txtUsername']);
+        $this->db->bind('password', $data['txtPassword']);
+        $this->db->bind('id', $data['id']);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
     // END UPDATE DATA =============================================================================================
 
     // CREATE ======================================================================================================
@@ -324,6 +350,18 @@ class AdminModel
         return $this->db->rowCount();
     }
 
+    public function newKasir($data)
+    {
+        $this->db->query("INSERT INTO `tb_kasir` (nama_kasir,alamat,no_hp,username,password) VALUES (:nama_kasir,:alamat,:no_hp,:username,:password)");
+        $this->db->bind('nama_kasir', $data['txtNamaKasir']);
+        $this->db->bind('alamat', $data['txtAlamat']);
+        $this->db->bind('no_hp', $data['txtNoHP']);
+        $this->db->bind('username', $data['txtUsername']);
+        $this->db->bind('password', $data['txtPassword']);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
 
     // public function simpanMedia($fileName)
     // {
@@ -371,6 +409,14 @@ class AdminModel
     public function deleteEtalaseByID($data)
     {
         $this->db->query("DELETE FROM `tb_etalase` WHERE id=:id");
+        $this->db->bind('id', $data['id']);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
+    public function deleteKasirByID($data)
+    {
+        $this->db->query("DELETE FROM `tb_kasir` WHERE id=:id");
         $this->db->bind('id', $data['id']);
         $this->db->execute();
         return $this->db->rowCount();

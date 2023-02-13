@@ -227,40 +227,15 @@ class AdminController extends Controller
     // =============================================================== END CUSTOMER
 
     // =============================================================== START KASIR
-    public function kasir($page = '', $act = '', $uniq = '')
+    public function kasir($page = '', $subpage = '', $act = '', $uniq = '')
     {
-        $this->auth();
-        if ($page == 'general') :
-            $data[] = '';
-            $this->page->kasir($data);
-        endif;
+        include "component/admin/kasir.php";
     }
     // =============================================================== END KASIR
 
     // =============================================================== START GUDANG
-    // public function gudang($page = '', $act = '', $uniq = '', $index = '')
     public function gudang($page = '', $subpage = '', $act = '', $uniq = '')
     {
-        // $this->auth();
-        // if ($page == 'general') :
-        //     if ($act == 'gudang') :
-        //         $data[''] = '';
-        //         $this->page->gudang($data);
-        //     elseif ($act == 'etalase') :
-        //         $data[''] = '';
-        //         $this->page->gudang($data);
-        //     elseif ($act == 'edit') :
-        //         if ($uniq == 'gudang') :
-        //             $data['tab'] = 'gudang';
-        //             $this->page->gudang($data);
-        //         elseif ($uniq == 'etalase') :
-        //             $data['tab'] = 'gudang';
-        //             $this->page->gudang($data);
-        //         endif;
-        //     else :
-        //         $this->page->redirect('admin/gudang/general/gudang/1');
-        //     endif;
-        // endif;
         include "component/admin/gudang.php";
     }
     // =============================================================== END GUDANG
