@@ -116,6 +116,18 @@ class AdminModel
         return $this->db->resultSet();
     }
 
+    public function getAllCustomerBaru()
+    {
+        $this->db->query("SELECT * FROM `tb_customer` WHERE status!='1'");
+        return $this->db->resultSet();
+    }
+
+    public function getAllCustomer()
+    {
+        $this->db->query("SELECT * FROM `tb_customer` WHERE status='1'");
+        return $this->db->resultSet();
+    }
+
     // END GET ALL =================================================================================================
 
     // COUNT DATA ==================================================================================================
@@ -178,6 +190,13 @@ class AdminModel
     {
         $this->db->query("SELECT SUM(nominal) AS total FROM `tb_pajak` WHERE YEAR(tanggal_pajak)=:tahun");
         $this->db->bind('tahun', (string)$data['tahun']);
+        return $this->db->single();
+    }
+
+    public function countCustomerByUsername($data)
+    {
+        $this->db->query("SELECT COUNT(*) AS total FROM `tb_customer` WHERE username=:username");
+        $this->db->bind('username', $data['txtUsername']);
         return $this->db->single();
     }
 
@@ -286,6 +305,28 @@ class AdminModel
         return $this->db->rowCount();
     }
 
+    public function confirmCustomerByID($data)
+    {
+        $this->db->query("UPDATE tb_customer SET status='1' WHERE id=:id");
+        $this->db->bind('id', $data['id']);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
+    public function updateCustomer($data)
+    {
+        $this->db->query("UPDATE tb_customer SET nama_customer=:nama, alamat=:alamat, id_propinsi=:propinsi, id_kota=:kota, no_hp=:nohp, email=:email WHERE id=:id");
+        $this->db->bind('id', (string) $data['id']);
+        $this->db->bind('nama', $data['txtNamaCustomer']);
+        $this->db->bind('alamat', $data['txtAlamat']);
+        $this->db->bind('propinsi', $data['selPropinsi']);
+        $this->db->bind('kota', $data['selKota']);
+        $this->db->bind('nohp', $data['txtNoHP']);
+        $this->db->bind('email', $data['txtEmail']);
+        // $this->db->bind('username', $data['txtUsername']);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
     // END UPDATE DATA =============================================================================================
 
     // CREATE ======================================================================================================
@@ -362,6 +403,22 @@ class AdminModel
         return $this->db->rowCount();
     }
 
+    public function newCustomer($data)
+    {
+        $this->db->query("INSERT INTO `tb_customer` (tanggal_daftar, nama_customer, alamat, id_propinsi, id_kota, no_hp, email,username,password,status) VALUES 
+                                                    (NOW(),:nama_customer,:alamat,:id_propinsi,:id_kota,:no_hp,:email,:username,:password,'1')");
+        $this->db->bind('nama_customer', $data['txtNamaCustomer']);
+        $this->db->bind('alamat', $data['txtAlamat']);
+        $this->db->bind('id_propinsi', $data['selPropinsi']);
+        $this->db->bind('id_kota', $data['selKota']);
+        $this->db->bind('no_hp', $data['txtNoHP']);
+        $this->db->bind('email', $data['txtEmail']);
+        $this->db->bind('username', $data['txtUsername']);
+        $this->db->bind('password', $data['txtPassword']);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
 
     // public function simpanMedia($fileName)
     // {
@@ -422,8 +479,16 @@ class AdminModel
         return $this->db->rowCount();
     }
 
-
+    public function deleteCustomerByID($data)
+    {
+        $this->db->query("DELETE FROM `tb_customer` WHERE id=:id");
+        $this->db->bind('id', $data['id']);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
     // END DELETE DATA =============================================================================================
+
+
 
     // START STATIC DATA =============================================================================================
     static public function staticGudangByID($data)
@@ -433,5 +498,45 @@ class AdminModel
         $db->bind('id', $data);
         return $db->single();
     }
+
+    static public function staticPropinsiByID($data)
+    {
+        $db = new Database('db_indonesia');
+        $db->query("SELECT * FROM `provinces` WHERE id=:id LIMIT 1");
+        $db->bind('id', $data);
+        return $db->single();
+    }
+
+    static public function staticKotaByID($data)
+    {
+        $db = new Database('db_indonesia');
+        $db->query("SELECT * FROM `regencies` WHERE id=:id LIMIT 1");
+        $db->bind('id', (string)$data);
+        return $db->single();
+    }
     // END STATIC DATA =============================================================================================
+
+    // START AJAX DATA =============================================================================================
+    public function getAllPropinsi()
+    {
+        $db = new Database('db_indonesia');
+        $db->query("SELECT * FROM `provinces` ORDER BY `name` ASC");
+        return $db->resultSet();
+    }
+
+    public function getAllKotaByPropinsi($data)
+    {
+        $db = new Database('db_indonesia');
+        $db->query("SELECT * FROM `regencies` WHERE province_id=:id");
+        $db->bind('id', $data);
+        return $db->resultSet();
+    }
+
+    public function getCustomerByID($data)
+    {
+        $this->db->query("SELECT * FROM `tb_customer` WHERE id=:id");
+        $this->db->bind('id', $data);
+        return $this->db->single();
+    }
+    // END AJAX DATA =============================================================================================
 }

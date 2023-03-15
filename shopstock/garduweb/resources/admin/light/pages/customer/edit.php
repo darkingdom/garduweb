@@ -2,26 +2,27 @@
 <div id="content">
     <div class="card mb-3">
         <div class="card-header">
-            Tambah Customer
+            Edit Customer
         </div>
         <div class="card-body">
-            <form id="frmCustomer" action="<?= BASEURL ?>/admin/customer/action/tambah/simpan/" method="POST">
+            <form id="frmCustomer" action="<?= BASEURL ?>/admin/customer/action/edit/simpan/" method="POST">
+                <input type="hidden" name="id" value="<?= @$data->customer->id ?>">
                 <div class="row mb-3">
                     <label for="txtNamaCustomer" class="col-sm-2 col-form-label text-nowrap">Nama</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="txtNamaCustomer" name="txtNamaCustomer">
+                        <input type="text" class="form-control" id="txtNamaCustomer" name="txtNamaCustomer" value="<?= @$data->customer->nama_customer ?>">
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="txtNoHP" class="col-sm-2 col-form-label text-nowrap">No. HP</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="txtNoHP" name="txtNoHP">
+                        <input type="text" class="form-control" id="txtNoHP" name="txtNoHP" value="<?= @$data->customer->no_hp ?>">
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="txtAlamat" class="col-sm-2 col-form-label text-nowrap">Alamat lengkap</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="txtAlamat" name="txtAlamat">
+                        <input type="text" class="form-control" id="txtAlamat" name="txtAlamat" value="<?= @$data->customer->alamat ?>">
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -30,7 +31,7 @@
                         <select class="form-select" id="selPropinsi" name="selPropinsi">
                             <option value="0">Pilihan...</option>
                             <?php foreach ($data->propinsi as $propinsi) : ?>
-                                <option value="<?= $propinsi->id ?>"><?= $propinsi->name ?></option>
+                                <option value="<?= $propinsi->id ?>" <?php if ($propinsi->id == $data->customer->id_propinsi) echo "selected"; ?>><?= $propinsi->name ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -40,34 +41,33 @@
                     <div class="col-sm-10">
                         <select class="form-select" id="selKota" name="selKota">
                             <option>Pilihan...</option>
+                            <?php
+                            if ($data->customer->id_kota != '') :
+                                echo "<option value='{$data->customer->id_kota}' selected>" . AdminModel::staticKotaByID($data->customer->id_kota)->name . "</option>";
+                            endif;
+                            ?>
                         </select>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="txtEmail" class="col-sm-2 col-form-label text-nowrap">Email</label>
                     <div class="col-sm-10">
-                        <input type="email" class="form-control" id="txtEmail" name="txtEmail">
+                        <input type="email" class="form-control" id="txtEmail" name="txtEmail" value="<?= @$data->customer->email ?>">
                     </div>
                 </div>
-                <div>
+                <!-- <div>
                     <hr>
                 </div>
                 <div class="row mb-3">
                     <label for="txtUsername" class="col-sm-2 col-form-label text-nowrap">Username</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="txtUsername" name="txtUsername">
+                        <input type="text" class="form-control" id="txtUsername" name="txtUsername" value="<?= @$data->customer->username ?>">
                     </div>
-                </div>
-                <div class="row">
-                    <label for="txtPassword" class="col-sm-2 col-form-label text-nowrap">Password</label>
-                    <div class="col-sm-10">
-                        <input type="password" class="form-control" id="txtPassword" name="txtPassword">
-                    </div>
-                </div>
+                </div> -->
             </form>
         </div>
         <div class="card-body border-top">
-            <button form="frmCustomer" type="submit" class="btn btn-primary btn-sm" name="btn-simpan">SIMPAN</button>
+            <button form="frmCustomer" type="submit" class="btn btn-danger btn-sm" name="btn-simpan">UPDATE</button>
         </div>
     </div>
 </div>

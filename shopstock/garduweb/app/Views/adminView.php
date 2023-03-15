@@ -185,6 +185,14 @@ class AdminView extends Controller
         $this->view('pages/customer/lihat-semua', $data);
         $this->footer();
     }
+
+    public function customerEdit($data = [])
+    {
+        $data['title'] = "Customer Edit";
+        $this->header($data);
+        $this->view('pages/customer/edit', $data);
+        $this->footer();
+    }
     // ========================================================== END CUSTOMER
 
     // ========================================================== START KASIR

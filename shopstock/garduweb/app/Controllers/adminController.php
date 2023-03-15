@@ -210,19 +210,9 @@ class AdminController extends Controller
     // =============================================================== END SUPPLIER
 
     // =============================================================== START CUSTOMER
-    public function customer($page = '', $act = '', $uniq = '')
+    public function customer($page = '', $subpage = '', $act = '', $uniq = '')
     {
-        $this->auth();
-        if ($page == 'tambah') :
-            $data[] = '';
-            $this->page->customer($data);
-        elseif ($page == 'baru') :
-            $data[] = '';
-            $this->page->customerNew($data);
-        elseif ($page == 'lihat-semua') :
-            $data[] = '';
-            $this->page->lihatCustomer($data);
-        endif;
+        include "component/admin/customer.php";
     }
     // =============================================================== END CUSTOMER
 

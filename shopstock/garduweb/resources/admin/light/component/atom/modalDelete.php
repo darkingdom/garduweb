@@ -17,7 +17,7 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <form id="modalDeleteURL" action="#" method="POST">
                     <input id="modal-delete-id" name="id" type="hidden" value="" />
-                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">DELETE</button>
+                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal" name="btn-delete">DELETE</button>
                 </form>
             </div>
         </div>
