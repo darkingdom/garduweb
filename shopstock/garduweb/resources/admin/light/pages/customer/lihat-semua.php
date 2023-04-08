@@ -22,7 +22,7 @@
                             <td><?= $customer->nama_customer ?></td>
                             <td><?= $customer->no_hp ?></td>
                             <td><?= $customer->username ?></td>
-                            <td><?= AdminModel::staticKotaByID($customer->id_kota)->name ?></td>
+                            <td><?= @AdminModel::staticKotaByID($customer->id_kota)->name ?></td>
                             <td>
                                 <div class="text-nowrap">
                                     <span href="#" class="data-detail" data-id="<?= $customer->id ?>" data-bs-toggle="modal" data-bs-target="#detailMember">
@@ -33,13 +33,17 @@
                                     <a href="<?= BASEURL ?>/admin/customer/edit/?id=<?= $customer->id ?>" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" data-bs-title="Edit">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
-                                    <a href="#" class="btn btn-dark btn-sm" data-bs-toggle="tooltip" data-bs-title="Reset Password">
-                                        <i class="fa-solid fa-unlock-keyhole"></i>
-                                    </a>
+                                    <span href="#" title="Confirm" class="data-confirm" data-id="<?= $customer->id ?>" data-bs-toggle="modal" data-bs-target="#modalConfirm">
+                                        <a href="#" class="btn btn-dark btn-sm" data-bs-toggle="tooltip" data-bs-title="Reset Password">
+                                            <i class="fa-solid fa-unlock-keyhole"></i>
+                                        </a>
+                                    </span>
                                     <span style="border-right: 1px solid #888; margin: 0 5px 0"></span>
-                                    <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" data-bs-title="Delete">
-                                        <i class="fa-solid fa-trash-can"></i>
-                                    </a>
+                                    <span class="data-delete" data-id="<?= $customer->id ?>" data-bs-toggle="modal" data-bs-target="#modalDelete">
+                                        <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" data-bs-title="Delete">
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </a>
+                                    </span>
                                 </div>
                             </td>
                         </tr>
@@ -80,10 +84,10 @@
         $(".data-confirm").on("click", function() {
             const id = $(this).data("id");
             $("#modal-confirm-id").val(id);
-            $("#modal-desc").html('Konfirmasi customer baru diterima?');
+            $("#modal-desc").html('Reset Password Anggota ini?');
             $("#modalConfirmURL").attr(
                 "action",
-                baseurl + "/admin/customer/action/baru/diterima/"
+                baseurl + "/admin/customer/action/lihat-semua/reset-password/"
             );
         });
     });
@@ -96,7 +100,7 @@
             $("#modal-delete-id").val(id);
             $("#modalDeleteURL").attr(
                 "action",
-                baseurl + "/admin/customer/action/baru/delete/"
+                baseurl + "/admin/customer/action/lihat-semua/delete/"
             );
         });
     });

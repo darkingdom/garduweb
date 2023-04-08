@@ -327,6 +327,15 @@ class AdminModel
         $this->db->execute();
         return $this->db->rowCount();
     }
+
+    public function resetPasswordCustomerByID($data)
+    {
+        $password = hash('sha256', '123456');
+        $this->db->query("UPDATE tb_customer SET password='$password' WHERE id=:id");
+        $this->db->bind('id', (string) $data['id']);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
     // END UPDATE DATA =============================================================================================
 
     // CREATE ======================================================================================================

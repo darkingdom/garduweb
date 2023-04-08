@@ -198,14 +198,7 @@ class AdminController extends Controller
     // =============================================================== START SUPPLIER
     public function supplier($page = '', $act = '', $uniq = '')
     {
-        $this->auth();
-        if ($page == 'tambah') :
-            $data[] = '';
-            $this->page->supplier($data);
-        elseif ($page == 'lihat-semua') :
-            $data[] = '';
-            $this->page->lihatSupplier($data);
-        endif;
+        include "component/admin/supplier.php";
     }
     // =============================================================== END SUPPLIER
 

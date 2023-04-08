@@ -79,6 +79,28 @@ elseif ($page == 'action') :
                 $this->page->redirect('admin/customer/edit/?id=' . $post['id']);
             endif;
         endif;
+    elseif ($subpage == 'lihat-semua') :
+        if ($act == 'reset-password') :
+            if (isset($post['btn-confirm'])) :
+                $diterima = $this->model->resetPasswordCustomerByID($post);
+                if ($diterima > 0) :
+                    Flasher::setFlash("RESET BERHASIL! password baru <b>123456</b>", 'success');
+                else :
+                    Flasher::setFlash("GAGAL", 'danger');
+                endif;
+            endif;
+            $this->page->redirect('admin/customer/lihat-semua/');
+        elseif ($act == 'delete') :
+            if (isset($post['btn-delete'])) :
+                $delete = $this->model->deleteCustomerByID($post);
+                if ($delete > 0) :
+                    Flasher::setFlash("BERHASIL", 'success');
+                else :
+                    Flasher::setFlash("GAGAL", 'danger');
+                endif;
+            endif;
+            $this->page->redirect('admin/customer/lihat-semua/');
+        endif;
     endif;
 
 
