@@ -57,6 +57,27 @@ class AdminModel
         return $this->db->single();
     }
 
+    public function getSupplierByID($data)
+    {
+        $this->db->query("SELECT * FROM `tb_supplier` WHERE id=:id LIMIT 1");
+        $this->db->bind('id', $data);
+        return $this->db->single();
+    }
+
+    public function getMediaByID($data)
+    {
+        $this->db->query("SELECT * FROM `tb_media` WHERE id=:id LIMIT 1");
+        $this->db->bind('id', $data);
+        return $this->db->single();
+    }
+
+    public function getKategoriByID($data)
+    {
+        $this->db->query("SELECT * FROM `tb_kategori` WHERE id=:id LIMIT 1");
+        $this->db->bind('id', $data);
+        return $this->db->single();
+    }
+
 
     // END GET =====================================================================================================
 
@@ -125,6 +146,31 @@ class AdminModel
     public function getAllCustomer()
     {
         $this->db->query("SELECT * FROM `tb_customer` WHERE status='1'");
+        return $this->db->resultSet();
+    }
+
+    public function getAllSupplier()
+    {
+        $this->db->query("SELECT * FROM `tb_supplier` ORDER BY `id` DESC");
+        return $this->db->resultSet();
+    }
+
+    public function getAllMedia()
+    {
+        $this->db->query("SELECT * FROM `tb_media` ORDER BY `id` DESC");
+        return $this->db->resultSet();
+    }
+
+    public function getAllKategoriParent()
+    {
+        $this->db->query("SELECT * FROM `tb_kategori` WHERE parent_1='0' ORDER BY `id` DESC");
+        return $this->db->resultSet();
+    }
+
+    public function getAllSubparentByIDParent($data)
+    {
+        $this->db->query("SELECT * FROM `tb_kategori` WHERE parent_1=:parent && parent_1!='0' ORDER BY `id` DESC");
+        $this->db->bind('parent', (string) $data);
         return $this->db->resultSet();
     }
 
@@ -336,6 +382,30 @@ class AdminModel
         $this->db->execute();
         return $this->db->rowCount();
     }
+
+    public function updateSupplierByID($data)
+    {
+        $this->db->query("UPDATE tb_supplier SET nama_supplier=:supplier, no_hp=:nohp, alamat=:alamat, url_supplier=:url, keterangan=:keterangan WHERE id=:id");
+        $this->db->bind('id', (string) $data['id']);
+        $this->db->bind('supplier', $data['txtNamaSupplier']);
+        $this->db->bind('nohp', $data['txtNoHP']);
+        $this->db->bind('alamat', $data['txtAlamat']);
+        $this->db->bind('url', $data['txtURL']);
+        $this->db->bind('keterangan', $data['txtKeterangan']);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
+    public function updateKategori($data)
+    {
+        $slug = Slug::textToSlug($data['txtKategori']);
+        $this->db->query("UPDATE tb_kategori SET kategori=:kategori, slug=:slug WHERE id=:id");
+        $this->db->bind('id', $data['id']);
+        $this->db->bind('kategori', $data['txtKategori']);
+        $this->db->bind('slug', $slug);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
     // END UPDATE DATA =============================================================================================
 
     // CREATE ======================================================================================================
@@ -428,14 +498,59 @@ class AdminModel
         return $this->db->rowCount();
     }
 
+    public function newSupplier($data)
+    {
+        $this->db->query("INSERT INTO `tb_supplier` (nama_supplier,no_hp,alamat,url_supplier,keterangan)VALUES(:supplier,:nohp,:alamat,:url,:keterangan)");
+        $this->db->bind('supplier', $data['txtNamaSupplier']);
+        $this->db->bind('nohp', $data['txtNoHP']);
+        $this->db->bind('alamat', $data['txtAlamat']);
+        $this->db->bind('url', $data['txtURL']);
+        $this->db->bind('keterangan', $data['txtKeterangan']);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
 
-    // public function simpanMedia($fileName)
-    // {
-    //     $this->db->query("INSERT INTO `media` (filename,type)VALUES(:filename,'image')");
-    //     $this->db->bind('filename', $fileName);
-    //     $this->db->execute();
-    //     return $this->db->rowCount();
-    // }
+    public function simpanMedia($data)
+    {
+        $this->db->query("INSERT INTO `tb_media` (nama_file,url_file,kategori)VALUES(:file,:url,:kategori)");
+        $this->db->bind('file', $data);
+        $this->db->bind('url', BASEURL . '/garduweb/storage/upload/images/' . $data);
+        $this->db->bind('kategori', 'produk');
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
+
+    public function simpanKategori($data)
+    {
+        if ($data['selParent1'] == '0') :
+            $parent1 = '0';
+            $parent2 = '0';
+            $parent3 = '0';
+        elseif ($data['selParent1'] != '0' && $data['selParent2'] == '0') :
+            $parent1 = $data['selParent1'];
+            $parent2 = '0';
+            $parent3 = '0';
+        elseif ($data['selParent1'] != '0' && $data['selParent2'] != '0' && $data['selParent3'] == '0') :
+            $parent1 = $data['selParent2'];
+            $parent2 = $data['selParent1'];
+            $parent3 = '0';
+        else :
+            $parent1 = $data['selParent3'];
+            $parent2 = $data['selParent2'];
+            $parent3 = $data['selParent1'];
+        endif;
+
+        $slug = Slug::textToSlug($data['txtKategori']);
+        $this->db->query("INSERT INTO `tb_kategori` (kategori,slug,parent_1,parent_2,parent_3)VALUES(:kategori,:slug,:parent1,:parent2,:parent3)");
+        $this->db->bind('kategori', $data['txtKategori']);
+        $this->db->bind('slug', $slug);
+        $this->db->bind('parent1', $parent1);
+        $this->db->bind('parent2', $parent2);
+        $this->db->bind('parent3', $parent3);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
 
     // END CREATE ==================================================================================================
 
@@ -495,6 +610,30 @@ class AdminModel
         $this->db->execute();
         return $this->db->rowCount();
     }
+
+    public function deleteSupplierByID($data)
+    {
+        $this->db->query("DELETE FROM `tb_supplier` WHERE id=:id");
+        $this->db->bind('id', $data['id']);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
+    public function deleteMediaByID($data)
+    {
+        $this->db->query("DELETE FROM `tb_media` WHERE id=:id");
+        $this->db->bind('id', $data);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
+    public function deleteKategoriByID($data)
+    {
+        $this->db->query("DELETE FROM `tb_kategori` WHERE id=:id");
+        $this->db->bind('id', $data['id']);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
     // END DELETE DATA =============================================================================================
 
 
@@ -546,6 +685,22 @@ class AdminModel
         $this->db->query("SELECT * FROM `tb_customer` WHERE id=:id");
         $this->db->bind('id', $data);
         return $this->db->single();
+    }
+
+    static public function AJAXgetSubparentByIDParent($data)
+    {
+        $db = new Database();
+        $db->query("SELECT * FROM `tb_kategori` WHERE parent_1=:id");
+        $db->bind('id', (string)$data);
+        return $db->resultSet();
+    }
+
+    static public function AJAXsumSubParentByIDParent($data)
+    {
+        $db = new Database();
+        $db->query("SELECT COUNT(*) AS total FROM `tb_kategori` WHERE parent_1=:id");
+        $db->bind('id', (string)$data);
+        return $db->single();
     }
     // END AJAX DATA =============================================================================================
 }

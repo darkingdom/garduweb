@@ -8,7 +8,7 @@
 
 <script>
     // Copy Clipboard
-    var clipboard = new ClipboardJS('.btn');
+    var clipboard = new ClipboardJS('.copy');
 
     // Tooltips Bootstrap
     $(document).ready(function() {

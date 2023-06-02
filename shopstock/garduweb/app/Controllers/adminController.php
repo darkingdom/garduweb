@@ -174,29 +174,21 @@ class AdminController extends Controller
     // =============================================================== END BRAND
 
     // =============================================================== START KATEGORI
-    public function kategori($page = '', $act = '', $uniq = '')
+    public function kategori($page = '', $subpage = '', $act = '', $uniq = '')
     {
-        $this->auth();
-        if ($page == 'general') :
-            $data[] = '';
-            $this->page->kategori($data);
-        endif;
+        include "component/admin/kategori.php";
     }
     // =============================================================== END KATEGORI
 
     // =============================================================== START MEDIA
-    public function media($page = '', $act = '', $uniq = '')
+    public function media($page = '', $subpage = '', $act = '', $uniq = '')
     {
-        $this->auth();
-        if ($page == 'general') :
-            $data[] = '';
-            $this->page->media($data);
-        endif;
+        include "component/admin/media.php";
     }
     // =============================================================== END MEDIA
 
     // =============================================================== START SUPPLIER
-    public function supplier($page = '', $act = '', $uniq = '')
+    public function supplier($page = '', $subpage = '', $act = '', $uniq = '')
     {
         include "component/admin/supplier.php";
     }

@@ -131,6 +131,14 @@ class AdminView extends Controller
         $this->view('pages/kategori/general', $data);
         $this->footer();
     }
+
+    public function editKategori($data = [])
+    {
+        $data['title'] = "Kategori";
+        $this->header($data);
+        $this->view('pages/kategori/edit', $data);
+        $this->footer();
+    }
     // ========================================================== END KATEGORI
 
     // ========================================================== START MEDIA
@@ -147,6 +155,14 @@ class AdminView extends Controller
     public function supplier($data = [])
     {
         $data['title'] = "Tambah Supplier";
+        $this->header($data);
+        $this->view('pages/supplier/tambah', $data);
+        $this->footer();
+    }
+
+    public function supplierEdit($data = [])
+    {
+        $data['title'] = "Edit Supplier";
         $this->header($data);
         $this->view('pages/supplier/tambah', $data);
         $this->footer();
