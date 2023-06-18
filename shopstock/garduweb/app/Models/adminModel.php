@@ -78,6 +78,13 @@ class AdminModel
         return $this->db->single();
     }
 
+    public function getBrandByID($data)
+    {
+        $this->db->query("SELECT * FROM `tb_brand` WHERE id=:id LIMIT 1");
+        $this->db->bind('id', $data);
+        return $this->db->single();
+    }
+
 
     // END GET =====================================================================================================
 
@@ -171,6 +178,12 @@ class AdminModel
     {
         $this->db->query("SELECT * FROM `tb_kategori` WHERE parent_1=:parent && parent_1!='0' ORDER BY `id` DESC");
         $this->db->bind('parent', (string) $data);
+        return $this->db->resultSet();
+    }
+
+    public function getAllBrand()
+    {
+        $this->db->query("SELECT * FROM `tb_brand` ORDER BY `id` DESC");
         return $this->db->resultSet();
     }
 
@@ -406,6 +419,17 @@ class AdminModel
         $this->db->execute();
         return $this->db->rowCount();
     }
+
+    public function updateBrand($data)
+    {
+        $this->db->query("UPDATE tb_brand SET nama_merk=:merek, url_logo=:logo, id_kategori=:kategori WHERE id=:id");
+        $this->db->bind('merek', $data['txtBrandName']);
+        $this->db->bind('logo', $data['txtUrlLogo']);
+        $this->db->bind('kategori', $data['selKategori']);
+        $this->db->bind('id', (string)$data['id']);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
     // END UPDATE DATA =============================================================================================
 
     // CREATE ======================================================================================================
@@ -520,7 +544,6 @@ class AdminModel
         return $this->db->rowCount();
     }
 
-
     public function simpanKategori($data)
     {
         if ($data['selParent1'] == '0') :
@@ -548,6 +571,16 @@ class AdminModel
         $this->db->bind('parent1', $parent1);
         $this->db->bind('parent2', $parent2);
         $this->db->bind('parent3', $parent3);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
+    public function simpanBrand($data)
+    {
+        $this->db->query("INSERT INTO `tb_brand` (nama_merk,url_logo,id_kategori)VALUES(:brand,:url,:kategori)");
+        $this->db->bind('brand', $data['txtBrandName']);
+        $this->db->bind('url', $data['txtUrlLogo']);
+        $this->db->bind('kategori', $data['selKategori']);
         $this->db->execute();
         return $this->db->rowCount();
     }
@@ -634,6 +667,14 @@ class AdminModel
         $this->db->execute();
         return $this->db->rowCount();
     }
+
+    public function deleteBrandByID($data)
+    {
+        $this->db->query("DELETE FROM `tb_brand` WHERE id=:id");
+        $this->db->bind('id', $data['id']);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
     // END DELETE DATA =============================================================================================
 
 
@@ -685,6 +726,14 @@ class AdminModel
         $this->db->query("SELECT * FROM `tb_customer` WHERE id=:id");
         $this->db->bind('id', $data);
         return $this->db->single();
+    }
+
+    static public function AJAXgetKategoriByID($data)
+    {
+        $db = new Database();
+        $db->query("SELECT * FROM `tb_kategori` WHERE id=:id");
+        $db->bind('id', (string)$data);
+        return $db->single();
     }
 
     static public function AJAXgetSubparentByIDParent($data)

@@ -113,7 +113,7 @@ class AdminView extends Controller
     }
     // ========================================================== END PRODUK
 
-    // ========================================================== START KATEGORI
+    // ========================================================== START BRAND
     public function brand($data = [])
     {
         $data['title'] = "Brand";
@@ -121,7 +121,15 @@ class AdminView extends Controller
         $this->view('pages/brand/general', $data);
         $this->footer();
     }
-    // ========================================================== END KATEGORI
+
+    public function editBrand($data = [])
+    {
+        $data['title'] = "Edit Brand";
+        $this->header($data);
+        $this->view('pages/brand/edit', $data);
+        $this->footer();
+    }
+    // ========================================================== END BRAND
 
     // ========================================================== START KATEGORI
     public function kategori($data = [])

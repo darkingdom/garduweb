@@ -163,13 +163,9 @@ class AdminController extends Controller
     // =============================================================== END PRODUK
 
     // =============================================================== START BRAND
-    public function brand($page = '', $act = '', $uniq = '')
+    public function brand($page = '', $subpage = '', $act = '', $uniq = '')
     {
-        $this->auth();
-        if ($page == 'general') :
-            $data[] = '';
-            $this->page->brand($data);
-        endif;
+        include "component/admin/brand.php";
     }
     // =============================================================== END BRAND
 
