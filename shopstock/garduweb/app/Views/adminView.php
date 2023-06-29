@@ -111,6 +111,14 @@ class AdminView extends Controller
         $this->view('pages/produk/tambah', $data);
         $this->footer();
     }
+
+    public function formProduk($data = [])
+    {
+        $data['title'] = "Produk";
+        $this->header($data);
+        $this->view('pages/produk/form', $data);
+        $this->footer();
+    }
     // ========================================================== END PRODUK
 
     // ========================================================== START BRAND

@@ -156,7 +156,7 @@ class AdminController extends Controller
     // =============================================================== END PESANAN
 
     // =============================================================== START PRODUK
-    public function produk($page = '', $act = '', $uniq = '')
+    public function produk($page = '', $subpage = '', $act = '', $uniq = '')
     {
         include "component/admin/produk.php";
     }

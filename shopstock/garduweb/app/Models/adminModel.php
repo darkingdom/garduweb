@@ -85,6 +85,13 @@ class AdminModel
         return $this->db->single();
     }
 
+    public function getProdukByUniqID($data)
+    {
+        $this->db->query("SELECT * FROM `tb_produk` WHERE uniq_id=:id LIMIT 1");
+        $this->db->bind('id', $data);
+        return $this->db->single();
+    }
+
 
     // END GET =====================================================================================================
 
@@ -184,6 +191,13 @@ class AdminModel
     public function getAllBrand()
     {
         $this->db->query("SELECT * FROM `tb_brand` ORDER BY `id` DESC");
+        return $this->db->resultSet();
+    }
+
+    public function getAllImageProdukByUniqID($data)
+    {
+        $this->db->query("SELECT * FROM `tb_produk_media` WHERE id_uniq_produk=:uniq ORDER BY `id` DESC");
+        $this->db->bind('uniq', $data);
         return $this->db->resultSet();
     }
 
@@ -430,6 +444,17 @@ class AdminModel
         $this->db->execute();
         return $this->db->rowCount();
     }
+
+    public function updateProduk($data)
+    {
+        $slug = Slug::textToSlug($data['txtNamaProduk']);
+        $this->db->query("UPDATE tb_produk SET nama_produk=:namaProduk, slug_produk='$slug'  WHERE uniq_id=:unique");
+        $this->db->bind('unique', $data['unique']);
+        $this->db->bind('namaProduk', $data['txtNamaProduk']);
+
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
     // END UPDATE DATA =============================================================================================
 
     // CREATE ======================================================================================================
@@ -581,6 +606,14 @@ class AdminModel
         $this->db->bind('brand', $data['txtBrandName']);
         $this->db->bind('url', $data['txtUrlLogo']);
         $this->db->bind('kategori', $data['selKategori']);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
+    public function simpanNewProduk($data)
+    {
+        $this->db->query("INSERT INTO `tb_produk` (tanggal, uniq_id)VALUES(NOW(),:uniq)");
+        $this->db->bind('uniq', $data);
         $this->db->execute();
         return $this->db->rowCount();
     }
