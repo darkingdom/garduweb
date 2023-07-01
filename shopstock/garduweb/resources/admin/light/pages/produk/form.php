@@ -165,169 +165,117 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div>
-                            <input type="checkbox" class="btn-check" id="btn-check-varian-enable" autocomplete="off">
+                            <input type="checkbox" class="btn-check" id="btn-check-varian-enable" autocomplete="off" <?php if ($data->produk->varian == '1') echo "checked"; ?>>
                             <label class="btn btn-outline-success varian" for="btn-check-varian-enable">Varian</label>
-                        </div>
-                        <div class="d-flex flex-row mt-3 border-bottom" id="pilihan-varian">
-                            <div class="me-3 mb-3">
-                                <input type="checkbox" class="btn-check" id="btn-check-varian-warna" autocomplete="off">
-                                <label class="btn btn-outline-primary" id="label-varian-warna" for="btn-check-varian-warna">Warna</label>
-                            </div>
-                            <div class="me-3 mb-3">
-                                <input type="checkbox" class="btn-check" id="btn-check-varian-ukuran" autocomplete="off">
-                                <label class="btn btn-outline-primary" id="label-varian-ukuran" for="btn-check-varian-ukuran">Ukuran</label>
-                            </div>
-                            <div class="me-3 mb-3">
-                                <input type="checkbox" class="btn-check" id="btn-check-varian-jenis" autocomplete="off">
-                                <label class="btn btn-outline-primary" id="label-varian-jenis" for="btn-check-varian-jenis">Jenis</label>
-                            </div>
-                            <div class="me-3 mb-3">
-                                <input type="checkbox" class="btn-check" id="btn-check-varian-lainnya" autocomplete="off">
-                                <label class="btn btn-outline-warning" id="label-varian-lainnya" for="btn-check-varian-lainnya">lainnya</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row mt-3 border-bottom" id="custom-varian">
-                    <div class="row after-add-more">
-                        <div class="col-md-3 custom-varian-warna">
-                            <div class="input-group mb-3">
-                                <label class="input-group-text" for="listVarianWarna[]">Warna</label>
-                                <select class="form-select" id="listVarianWarna[]" name="listVarianWarna[]">
-                                    <option selected>Pilihan...</option>
-                                    <option value="1" style="color: #ff0000; font-weight: bold;">
-                                        Merah
-                                    </option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-3 custom-varian-ukuran">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text" id="txtVarianUkuran[]">Ukuran</span>
-                                <input type="text" class="form-control" style="text-transform: uppercase;" placeholder="Contoh: S, M, L, XL, XXL" aria-label="Username" aria-describedby="txtVarianUkuran[]" name="txtVarianUkuran[]">
-                            </div>
-                        </div>
-                        <div class="col-md-3 custom-varian-jenis">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text" id="txtVarianJenis[]">Jenis</span>
-                                <input type="text" class="form-control" placeholder="type barang" aria-label="Username" aria-describedby="txtVarianJenis[]" name="txtVarianJenis[]">
-                            </div>
-                        </div>
-                        <div class="col-md-3 custom-varian-lainnya">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text" id="txtVarianLainnya[]">lainnya</span>
-                                <input type="text" class="form-control" aria-label="Username" aria-describedby="txtVarianLainnya[]" name="txtVarianLainnya[]">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3 basic-varian">
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text" id="txtVarianBerat[]">Berat (gr)</span>
-                                    <input type="text" class="form-control" aria-label="Username" aria-describedby="txtVarianBerat[]" name="txtVarianBerat[]">
-                                </div>
-                            </div>
-                            <div class="col-md-2 basic-varian">
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text" id="txtVarianStok[]">Stok</span>
-                                    <input type="text" class="form-control" aria-label="Username" aria-describedby="txtVarianStok[]" name="txtVarianStok[]">
-                                </div>
-                            </div>
-                            <div class="col-md-2 basic-varian">
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text" id="txtVarianSKU[]">SKU</span>
-                                    <input type="text" class="form-control" aria-label="Username" aria-describedby="txtVarianSKU[]" name="txtVarianSKU[]">
-                                </div>
-                            </div>
-                            <div class="col-md-3 basic-varian">
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text" id="txtVarianHarga[]">Harga</span>
-                                    <input type="number" class="form-control" aria-label="Username" aria-describedby="txtVarianHarga[]" name="txtVarianHarga[]">
-                                </div>
-                            </div>
-                            <div class="col-md-2 mb-3">
-                                <button class="btn btn-success add-more" type="button">
-                                    <i class="fa-solid fa-plus"></i> Add
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="copy hide">
-                <div class="row border-top pt-3 control-group">
-                    <div class="col-md-3 custom-varian-warna">
-                        <div class="input-group mb-3">
-                            <label class="input-group-text" for="listVarianWarna[]">Warna</label>
-                            <select class="form-select" id="listVarianWarna[]" name="listVarianWarna[]">
-                                <option selected>Pilihan...</option>
-                                <option value="1" style="color: #ff0000; font-weight: bold;">
-                                    Merah
-                                </option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-3 custom-varian-ukuran">
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="txtVarianUkuran[]">Ukuran</span>
-                            <input type="text" class="form-control" style="text-transform: uppercase;" placeholder="Contoh: S, M, L, XL, XXL" aria-label="Username" aria-describedby="txtVarianUkuran[]" name="txtVarianUkuran[]">
-                        </div>
-                    </div>
-                    <div class="col-md-3 custom-varian-jenis">
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="txtVarianJenis[]">Jenis</span>
-                            <input type="text" class="form-control" placeholder="type barang" aria-label="Username" aria-describedby="txtVarianJenis[]" name="txtVarianJenis[]">
-                        </div>
-                    </div>
-                    <div class="col-md-3 custom-varian-lainnya">
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="txtVarianLainnya[]">lainnya</span>
-                            <input type="text" class="form-control" aria-label="Username" aria-describedby="txtVarianLainnya[]" name="txtVarianLainnya[]">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3 basic-varian">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text" id="txtVarianBerat[]">Berat (gr)</span>
-                                <input type="text" class="form-control" aria-label="Username" aria-describedby="txtVarianBerat[]" name="txtVarianBerat[]">
-                            </div>
-                        </div>
-                        <div class="col-md-2 basic-varian">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text" id="txtVarianStok[]">Stok</span>
-                                <input type="text" class="form-control" aria-label="Username" aria-describedby="txtVarianStok[]" name="txtVarianStok[]">
-                            </div>
-                        </div>
-                        <div class="col-md-2 basic-varian">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text" id="txtVarianSKU[]">SKU</span>
-                                <input type="text" class="form-control" aria-label="Username" aria-describedby="txtVarianSKU[]" name="txtVarianSKU[]">
-                            </div>
-                        </div>
-                        <div class="col-md-3 basic-varian">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text" id="txtVarianHarga[]">Harga</span>
-                                <input type="number" class="form-control" aria-label="Username" aria-describedby="txtVarianHarga[]" name="txtVarianHarga[]">
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <button class="btn btn-danger remove mb-3" type="button">
-                                <i class="fa-solid fa-trash"></i> Remove
-                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <?php
+        if ($data->produk->varian == '1') :
+            $show = '';
+        else :
+            $show = 'hide';
+        endif;
+        ?>
+
+        <div class="card mb-3 <?= $show ?>" id="varian">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="d-flex flex-row mt-3 border-bottom <?= $show ?>" id="pilihan-varian">
+                            <div class="me-3 mb-3">
+                                <input type="checkbox" class="btn-check" id="btn-check-varian-warna" autocomplete="off" <?php if ($data->produk->varian_warna == '1') echo "checked" ?>>
+                                <label class="btn btn-outline-primary" id="label-varian-warna" for="btn-check-varian-warna">Warna</label>
+                            </div>
+                            <div class="me-3 mb-3">
+                                <input type="checkbox" class="btn-check" id="btn-check-varian-ukuran" autocomplete="off" <?php if ($data->produk->varian_ukuran == '1') echo "checked" ?>>
+                                <label class="btn btn-outline-danger" id="label-varian-ukuran" for="btn-check-varian-ukuran">Ukuran</label>
+                            </div>
+                            <div class="me-3 mb-3">
+                                <input type="checkbox" class="btn-check" id="btn-check-varian-jenis" autocomplete="off" <?php if ($data->produk->varian_jenis == '1') echo "checked" ?>>
+                                <label class="btn btn-outline-warning" id="label-varian-jenis" for="btn-check-varian-jenis">Jenis</label>
+                            </div>
+                            <!-- 
+                            <div class="me-3 mb-3">
+                                <input type="checkbox" class="btn-check" id="btn-check-varian-lainnya" autocomplete="off">
+                                <label class="btn btn-outline-warning" id="label-varian-lainnya" for="btn-check-varian-lainnya">lainnya</label>
+                            </div> 
+                            -->
+                        </div>
+                    </div>
+                </div>
+
+                <?php
+                if ($data->produk->varian_warna == '1') $showWarna = '';
+                else $showWarna = 'hide';
+                if ($data->produk->varian_ukuran == '1') $showUkuran = '';
+                else $showUkuran = 'hide';
+                if ($data->produk->varian_jenis == '1') $showJenis = '';
+                else $showJenis = 'hide';
+                ?>
+                <div class="mt-3 <?= $show ?>" id="custom-varian">
+                    <table class="after-add-more">
+                        <tr>
+                            <th class="custom-varian-warna bg-primary text-light <?= $showWarna ?>">Warna</th>
+                            <th class="custom-varian-ukuran bg-danger text-light <?= $showUkuran ?>">Ukuran</th>
+                            <th class="custom-varian-jenis bg-warning  <?= $showJenis ?>">Jenis</th>
+                            <th>Berat (gr)</th>
+                            <th>Stok</th>
+                            <th>SKU</th>
+                            <th>Harga (Rp)</th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <td class="custom-varian-warna bg-primary <?= $showWarna ?>"><input type="text" style="width: 100px;"></td>
+                            <td class="custom-varian-ukuran bg-danger <?= $showUkuran ?>"><input type="text" style="width: 100px;"></td>
+                            <td class="custom-varian-jenis bg-warning <?= $showJenis ?>"><input type="text" style="width: 100px;"></td>
+                            <td><input type="text" style="width: 100px;"></td>
+                            <td><input type="text" style="width: 100px;"></td>
+                            <td><input type="text" style="width: 100px;"></td>
+                            <td><input type="text" style="width: 100px;"></td>
+                            <td>
+                                <button class="btn btn-success add-more btn-sm" type="button">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="copy hide">
+                <table class="control-group">
+                    <tr>
+                        <td class="custom-varian-warna bg-primary <?= $showWarna ?>"><input type="text" style="width: 100px;"></td>
+                        <td class="custom-varian-ukuran bg-danger <?= $showUkuran ?>"><input type="text" style="width: 100px;"></td>
+                        <td class="custom-varian-jenis bg-warning <?= $showJenis ?>"><input type="text" style="width: 100px;"></td>
+                        <td><input type="text" style="width: 100px;"></td>
+                        <td><input type="text" style="width: 100px;"></td>
+                        <td><input type="text" style="width: 100px;"></td>
+                        <td><input type="text" style="width: 100px;"></td>
+                        <td>
+                            <button class="btn btn-danger remove btn-sm" type="button">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
 
 
-        <div class="card mb-3">
+
+        <?php
+        if ($data->produk->varian == '1') :
+            $showNonVarian = 'hide';
+        else :
+            $showNonVairan = '';
+        endif;
+        ?>
+        <div class="card mb-3 <?= $showNonVarian ?>" id="nonVarian">
             <div class="card-body">
                 <div class="row mb-3">
                     <div class="col-sm-2">Berat</div>
@@ -514,13 +462,6 @@
                     </div>
                     <div class="col-3">
                         <div class="list-group" style="font-size: 11px;" id="pilihan-kategori-4">
-                            <button type="button" class="list-group-item list-group-item-action" aria-current="true">
-                                The current button
-                            </button>
-                            <button type="button" class="list-group-item list-group-item-action">A second button item</button>
-                            <button type="button" class="list-group-item list-group-item-action">A third button item</button>
-                            <button type="button" class="list-group-item list-group-item-action">A fourth button item</button>
-                            <button type="button" class="list-group-item list-group-item-action">A disabled button item</button>
                         </div>
                     </div>
                 </div>
@@ -692,23 +633,41 @@
         //END >> Tampilan Kategori
 
 
-        //Varian
-        $("#pilihan-varian").addClass('hide');
-        $(".varian").click(function() {
-            if ($('#btn-check-varian-enable').prop('checked') == true) {
-                $("#pilihan-varian").addClass('hide');
-                $("#custom-varian").addClass('hide');
-            } else {
-                $("#pilihan-varian").removeClass('hide');
-            }
+        //START >> ADD-MORE
+        $(".add-more").click(function() {
+            var html = $(".copy").html();
+            $(".after-add-more").after(html);
         });
 
+        $("body").on("click", ".remove", function() {
+            $(this).parents(".control-group").remove();
+        });
+        //END >> ADD-MORE
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+
+        //Varian
+        // $("#pilihan-varian").addClass('hide');
+        // $("#btn-check-varian-enable").click(function() {
+        //     if ($('#btn-check-varian-enable').prop('checked') == true) {
+        //         $("#pilihan-varian").removeClass('hide');
+        //     } else {
+        //         $("#pilihan-varian").addClass('hide');
+        //         $("#custom-varian").addClass('hide');
+        //     }
+        // });
+
+
         //start custom varian
-        $(".custom-varian-warna").addClass('hide');
-        $(".custom-varian-ukuran").addClass('hide');
-        $(".custom-varian-jenis").addClass('hide');
-        $(".custom-varian-lainnya").addClass('hide');
-        $("#custom-varian").addClass('hide');
+        // $(".custom-varian-warna").addClass('hide');
+        // $(".custom-varian-ukuran").addClass('hide');
+        // $(".custom-varian-jenis").addClass('hide');
+        // $(".custom-varian-lainnya").addClass('hide');
+        // $("#custom-varian").addClass('hide');
+
         // //varian warna
         $("#label-varian-warna").click(function() {
             if ($('#btn-check-varian-warna').prop('checked') == true) {
@@ -744,21 +703,107 @@
                 $(".custom-varian-lainnya").removeClass('hide');
                 $("#custom-varian").removeClass('hide');
             }
-        });
-
-
-
-
-
-        //START >> ADD-MORE
-        $(".add-more").click(function() {
-            var html = $(".copy").html();
-            $(".after-add-more").after(html);
-        });
-
-        $("body").on("click", ".remove", function() {
-            $(this).parents(".control-group").remove();
-        });
-        //END >> ADD-MORE
+        })
     });
 </script>
+
+<script>
+    $(document).ready(function() {
+        // $('#btn-check-varian-enable').click(function() {
+        //     alert('buttn variasi');
+        // })
+        $("#btn-check-varian-enable").click(function() {
+            if ($('#btn-check-varian-enable').prop('checked') == true) {
+                $("#pilihan-varian").removeClass('hide');
+                $("#varian").removeClass('hide');
+                $("#nonVarian").addClass('hide');
+            } else {
+                $("#pilihan-varian").addClass('hide');
+                $("#custom-varian").addClass('hide');
+                $("#nonVarian").removeClass('hide');
+                $("#varian").addClass('hide');
+            }
+        });
+    });
+</script>
+
+<script>
+    // $(document).ready(function() {
+    //     var rand = Math.random();
+    //     $('#btnADD').click(function() {
+    //         $(this).parents("input[name='txtVarianBerat[]']").val(rand);
+    //         // alert(rand);
+    //     })
+    // });
+
+    // function tampilkan() {
+    //     var rand = Math.random();
+    //     $(this).val('haloo')
+    // }
+</script>
+
+
+<!-- <div class="row after-add-more">
+                        <div class="col-md-3 custom-varian-warna <?= $showWarna ?>">
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="listVarianWarna[]">Warna</label>
+                                <select class="form-select" id="listVarianWarna[]" name="listVarianWarna[]">
+                                    <option selected>Pilihan...</option>
+                                    <option value="1" style="color: #ff0000; font-weight: bold;">
+                                        Merah
+                                    </option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3 custom-varian-ukuran <?= $showUkuran ?>">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="txtVarianUkuran[]">Ukuran</span>
+                                <input type="text" class="form-control" style="text-transform: uppercase;" placeholder="Contoh: S, M, L, XL, XXL" aria-label="Username" aria-describedby="txtVarianUkuran[]" name="txtVarianUkuran[]">
+                            </div>
+                        </div>
+                        <div class="col-md-3 custom-varian-jenis <?= $showJenis ?>">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="txtVarianJenis[]">Jenis</span>
+                                <input type="text" class="form-control" placeholder="type barang" aria-label="Username" aria-describedby="txtVarianJenis[]" name="txtVarianJenis[]">
+                            </div>
+                        </div>
+                        <!-/- <div class="col-md-3 custom-varian-lainnya">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="txtVarianLainnya[]">lainnya</span>
+                                <input type="text" class="form-control" aria-label="Username" aria-describedby="txtVarianLainnya[]" name="txtVarianLainnya[]">
+                            </div>
+                        </div> -/->
+                    <div class="row">
+                        <div class="col-md-3 basic-varian">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="txtVarianBerat[]">Berat (gr)</span>
+                                <input type="text" class="form-control" aria-label="Username" aria-describedby="txtVarianBerat[]" name="txtVarianBerat[]">
+                            </div>
+                        </div>
+                        <div class="col-md-2 basic-varian">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="txtVarianStok[]">Stok</span>
+                                <input type="text" class="form-control" aria-label="Username" aria-describedby="txtVarianStok[]" name="txtVarianStok[]">
+                            </div>
+                        </div>
+                        <div class="col-md-2 basic-varian">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="txtVarianSKU[]">SKU</span>
+                                <input type="text" class="form-control" aria-label="Username" aria-describedby="txtVarianSKU[]" name="txtVarianSKU[]">
+                            </div>
+                        </div>
+                        <div class="col-md-3 basic-varian">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="txtVarianHarga[]">Harga</span>
+                                <input type="number" class="form-control" aria-label="Username" aria-describedby="txtVarianHarga[]" name="txtVarianHarga[]">
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <button class="btn btn-success add-more" type="button" id="btnADD">
+                                <i class="fa-solid fa-plus"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div> -->
