@@ -1,4 +1,5 @@
 <?= Flasher::flash() ?>
+<?php Session::set("uniqProduk", $data->produk->uniq_id); ?>
 <div id="content">
     <form action="<?= BASEURL ?>/admin/produk/action/tambah/edit/" method="POST">
         <input type="hidden" id="unique" name="unique" value="<?= $data->produk->uniq_id ?>">
@@ -15,101 +16,17 @@
                                 <?php } ?>
                             </div>
                             <div class="card-upload-footer">
-                                <!-- <input type="file" id="file1" name="file1" class="form-upload" /> -->
-                                <!-- <input type="hidden" id="txtImage1" name="txtImage1" value="<?= @$data->img1 ?>" /> -->
-                                <input type="button" class="col btn btn-danger" value="Delete" id="btn_delete1" <?php if (!empty(@$data->img1)) echo "style='display:inline;'"; ?>>
-                                <a href="#" class="action-button"><i class="fa-solid fa-trash-can"></i> Hapus</a>
+                                <a href="#" data-id="<?= $image->id ?>" class="action-button btn-media-delete"><i class="fa-solid fa-trash-can"></i> Hapus</a>
                             </div>
                         </div>
                     <?php endforeach; ?>
 
                     <div class="card-upload">
                         <div class='preview' style="height: 180px; padding-top: 20px;">
+                            <input type="file" id="file1" name="file1" class="form-upload" />
                             <img src="<?= ASSETADM ?>/asset/images/plus.jpg" id="img1" style="max-width: 120px; max-height: 120px;">
                         </div>
                     </div>
-
-                    <!-- <div class="card-upload">
-                        <div class='preview'>
-                            <?php if (@$data->img1 != NULL) { ?>
-                                <img src="<?= ASSETADM ?>/storage/upload/images/thumb/<?= @$data->img1 ?>" id="img1" width="100" height="100">
-                            <?php } else { ?>
-                                <img src="<?= ASSETADM ?>/asset/images/plus.jpg" id="img1" style="max-width: 120px; max-height: 120px;">
-                            <?php } ?>
-                        </div>
-                        <div class="card-upload-footer">
-                            <input type="file" id="file1" name="file1" class="form-upload" />
-                            <input type="hidden" id="txtImage1" name="txtImage1" value="<?= @$data->img1 ?>" />
-                            <input type="button" class="col btn btn-danger" value="Delete" id="btn_delete1" <?php if (!empty(@$data->img1)) echo "style='display:inline;'"; ?>>
-                            <a href="#" class="action-button"><i class="fa-solid fa-trash-can"></i> Hapus</a>
-                        </div>
-                    </div>
-
-                    <div class="card-upload">
-                        <div class='preview'>
-                            <?php if (@$data->img1 != NULL) { ?>
-                                <img src="<?= ASSETADM ?>/storage/upload/images/thumb/<?= @$data->img1 ?>" id="img1" width="100" height="100">
-                            <?php } else { ?>
-                                <img src="<?= ASSETADM ?>/asset/images/plus.jpg" id="img1" style="max-width: 120px; max-height: 120px;">
-                            <?php } ?>
-                        </div>
-                        <div class="card-upload-footer">
-                            <input type="file" id="file1" name="file1" class="form-upload" />
-                            <input type="hidden" id="txtImage1" name="txtImage1" value="<?= @$data->img1 ?>" />
-                            <input type="button" class="col btn btn-danger" value="Delete" id="btn_delete1" <?php if (!empty(@$data->img1)) echo "style='display:inline;'"; ?>>
-                            <a href="#" class="action-button"><i class="fa-solid fa-trash-can"></i> Hapus</a>
-                        </div>
-                    </div>
-
-                    <div class="card-upload">
-                        <div class='preview'>
-                            <?php if (@$data->img1 != NULL) { ?>
-                                <img src="<?= ASSETADM ?>/storage/upload/images/thumb/<?= @$data->img1 ?>" id="img1" width="100" height="100">
-                            <?php } else { ?>
-                                <img src="<?= ASSETADM ?>/asset/images/plus.jpg" id="img1" style="max-width: 120px; max-height: 120px;">
-                            <?php } ?>
-                        </div>
-                        <div class="card-upload-footer">
-                            <input type="file" id="file1" name="file1" class="form-upload" />
-                            <input type="hidden" id="txtImage1" name="txtImage1" value="<?= @$data->img1 ?>" />
-                            <input type="button" class="col btn btn-danger" value="Delete" id="btn_delete1" <?php if (!empty(@$data->img1)) echo "style='display:inline;'"; ?>>
-                            <a href="#" class="action-button"><i class="fa-solid fa-trash-can"></i> Hapus</a>
-                        </div>
-                    </div> 
-
-                    <div class="card-upload">
-                        <div class='preview'>
-                            <?php if (@$data->img1 != NULL) { ?>
-                                <img src="<?= ASSETADM ?>/storage/upload/images/thumb/<?= @$data->img1 ?>" id="img1" width="100" height="100">
-                            <?php } else { ?>
-                                <img src="<?= ASSETADM ?>/asset/images/plus.jpg" id="img1" style="max-width: 120px; max-height: 120px;">
-                            <?php } ?>
-                        </div>
-                        <div class="card-upload-footer">
-                            <input type="file" id="file1" name="file1" class="form-upload" />
-                            <input type="hidden" id="txtImage1" name="txtImage1" value="<?= @$data->img1 ?>" />
-                            <input type="button" class="col btn btn-danger" value="Delete" id="btn_delete1" <?php if (!empty(@$data->img1)) echo "style='display:inline;'"; ?>>
-                            <a href="#" class="action-button"><i class="fa-solid fa-trash-can"></i> Hapus</a>
-                        </div>
-                    </div>
-
-                    <div class="card-upload">
-                        <div class='preview'>
-                            <?php if (@$data->img1 != NULL) { ?>
-                                <img src="<?= ASSETADM ?>/storage/upload/images/thumb/<?= @$data->img1 ?>" id="img1" width="100" height="100">
-                            <?php } else { ?>
-                                <img src="<?= ASSETADM ?>/asset/images/plus.jpg" id="img1" style="max-width: 120px; max-height: 120px;">
-                            <?php } ?>
-                        </div>
-                        <div class="card-upload-footer">
-                            <input type="file" id="file1" name="file1" class="form-upload" />
-                            <input type="hidden" id="txtImage1" name="txtImage1" value="<?= @$data->img1 ?>" />
-                            <input type="button" class="col btn btn-danger" value="Delete" id="btn_delete1" <?php if (!empty(@$data->img1)) echo "style='display:inline;'"; ?>>
-                            <a href="#" class="action-button"><i class="fa-solid fa-trash-can"></i> Hapus</a>
-                        </div>
-                    </div> -->
-
-
 
                 </div>
             </div>
@@ -127,22 +44,29 @@
                     <div class="col-sm-2  text-nowrap">Kategori</div>
                     <div class="col-sm-10">
                         <div class="input-group">
-                            <input type="text" readonly class="form-control" aria-describedby="button-addon2">
+                            <div class="form-control fst-italic" id="txtKategori">
+                                <span id="fillKategori1"><?= @AdminModel::STATICgetKategoriByID($data->produk->id_kategori_1)->kategori ?></span>
+                                <span id="fillKategori2"><?php if ($data->produk->id_kategori_2 != '') echo ">" . AdminModel::STATICgetKategoriByID($data->produk->id_kategori_2)->kategori ?></span>
+                                <span id="fillKategori3"><?php if ($data->produk->id_kategori_3 != '') echo ">" . AdminModel::STATICgetKategoriByID($data->produk->id_kategori_3)->kategori ?></span>
+                                <span id="fillKategori4"><?php if ($data->produk->id_kategori_4 != '') echo ">" . AdminModel::STATICgetKategoriByID($data->produk->id_kategori_4)->kategori ?></span>
+                            </div>
                             <button class="btn btn-outline-secondary" type="button" id="button-addon2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Pilih</button>
                         </div>
+                        <input type="hidden" name="txtKategori_1" id="txtKategori_1" value="<?= @$data->produk->id_kategori_1 ?>">
+                        <input type="hidden" name="txtKategori_2" id="txtKategori_2" value="<?= @$data->produk->id_kategori_2 ?>">
+                        <input type="hidden" name="txtKategori_3" id="txtKategori_3" value="<?= @$data->produk->id_kategori_3 ?>">
+                        <input type="hidden" name="txtKategori_4" id="txtKategori_4" value="<?= @$data->produk->id_kategori_4 ?>">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-sm-2">Merk</div>
+                    <div class="col-sm-2">Merek</div>
                     <div class="col-sm-10">
-                        <select class="form-select" id="inputGroupSelect01">
-                            <option selected>Pilihan...</option>
-                            <option value="1" style="color: #ff0000; font-weight: bold;">
-                                Merah
-                            </option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        <select class="form-select" id="selBrand" name="selBrand">
+                            <option value="0">Pilihan...</option>
+                            <?php foreach ($data->brand as $brand) : ?>
+                                <option value="<?= $brand->id ?>" <?php if ($brand->id == $data->produk->id_brand) echo "selected"; ?>><?= $brand->nama_merk ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                 </div>
@@ -152,9 +76,9 @@
         <div class="card mb-3">
             <div class="card-body">
                 <div class="row">
-                    <label for="txtNamaWarna" class="col-sm-2 col-form-label text-nowrap">Deskripsi</label>
+                    <label for="txtDeskripsi" class="col-sm-2 col-form-label text-nowrap">Deskripsi</label>
                     <div class="col-sm-10">
-                        <textarea type="text" class="form-control" id="txtPajak" name="txtPajak"></textarea>
+                        <textarea type="text" class="form-control" id="txtDeskripsi" name="txtDeskripsi"><?= @$data->produk->deskripsi_produk ?></textarea>
                     </div>
                 </div>
             </div>
@@ -165,7 +89,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div>
-                            <input type="checkbox" class="btn-check" id="btn-check-varian-enable" autocomplete="off" <?php if ($data->produk->varian == '1') echo "checked"; ?>>
+                            <input type="checkbox" class="btn-check" id="btn-check-varian-enable" name="btn-check-varian-enable" value="1" autocomplete="off" <?php if ($data->produk->varian == '1') echo "checked"; ?>>
                             <label class="btn btn-outline-success varian" for="btn-check-varian-enable">Varian</label>
                         </div>
                     </div>
@@ -187,15 +111,15 @@
                     <div class="col-sm-12">
                         <div class="d-flex flex-row mt-3 border-bottom <?= $show ?>" id="pilihan-varian">
                             <div class="me-3 mb-3">
-                                <input type="checkbox" class="btn-check" id="btn-check-varian-warna" autocomplete="off" <?php if ($data->produk->varian_warna == '1') echo "checked" ?>>
+                                <input type="checkbox" class="btn-check" id="btn-check-varian-warna" name="btn-check-varian-warna" value="1" autocomplete="off" <?php if ($data->produk->varian_warna == '1') echo "checked" ?>>
                                 <label class="btn btn-outline-primary" id="label-varian-warna" for="btn-check-varian-warna">Warna</label>
                             </div>
                             <div class="me-3 mb-3">
-                                <input type="checkbox" class="btn-check" id="btn-check-varian-ukuran" autocomplete="off" <?php if ($data->produk->varian_ukuran == '1') echo "checked" ?>>
+                                <input type="checkbox" class="btn-check" id="btn-check-varian-ukuran" name="btn-check-varian-ukuran" value="1" autocomplete="off" <?php if ($data->produk->varian_ukuran == '1') echo "checked" ?>>
                                 <label class="btn btn-outline-danger" id="label-varian-ukuran" for="btn-check-varian-ukuran">Ukuran</label>
                             </div>
                             <div class="me-3 mb-3">
-                                <input type="checkbox" class="btn-check" id="btn-check-varian-jenis" autocomplete="off" <?php if ($data->produk->varian_jenis == '1') echo "checked" ?>>
+                                <input type="checkbox" class="btn-check" id="btn-check-varian-jenis" name="btn-check-varian-jenis" value="1" autocomplete="off" <?php if ($data->produk->varian_jenis == '1') echo "checked" ?>>
                                 <label class="btn btn-outline-warning" id="label-varian-jenis" for="btn-check-varian-jenis">Jenis</label>
                             </div>
                             <!-- 
@@ -229,13 +153,25 @@
                             <th></th>
                         </tr>
                         <tr>
-                            <td class="custom-varian-warna bg-primary <?= $showWarna ?>"><input type="text" style="width: 100px;"></td>
-                            <td class="custom-varian-ukuran bg-danger <?= $showUkuran ?>"><input type="text" style="width: 100px;"></td>
-                            <td class="custom-varian-jenis bg-warning <?= $showJenis ?>"><input type="text" style="width: 100px;"></td>
-                            <td><input type="text" style="width: 100px;"></td>
-                            <td><input type="text" style="width: 100px;"></td>
-                            <td><input type="text" style="width: 100px;"></td>
-                            <td><input type="text" style="width: 100px;"></td>
+                            <td class="custom-varian-warna bg-primary <?= $showWarna ?>">
+                                <!-- <input type="text" style="width: 100px;"> -->
+                                <select id="varianWarna[]" name="varianWarna[]" style="width: 100px;">
+                                    <option value="0">Pilihan</option>
+                                    <?php foreach ($data->color as $color) : ?>
+                                        <option value="<?= $color->id ?>"><?= $color->nama_color ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </td>
+                            <td class="custom-varian-ukuran bg-danger <?= $showUkuran ?>">
+                                <input type="text" id="varianUkuran[]" name="varianUkuran[]" style="width: 100px;">
+                            </td>
+                            <td class="custom-varian-jenis bg-warning <?= $showJenis ?>">
+                                <input type="text" id="varianJenis[]" name="varianJenis[]" style="width: 100px;">
+                            </td>
+                            <td><input type="text" id="varianBerat[]" name="varianBerat[]" style="width: 100px;"></td>
+                            <td><input type="text" id="varianStock[]" name="varianStock[]" style="width: 100px;"></td>
+                            <td><input type="text" id="varianSKU[]" name="varianSKU[]" style="width: 100px;"></td>
+                            <td><input type="text" id="varianHarga[]" name="varianHarga[]" style="width: 100px;"></td>
                             <td>
                                 <button class="btn btn-success add-more btn-sm" type="button">
                                     <i class="fa-solid fa-plus"></i>
@@ -446,7 +382,7 @@
                     <div class="col-3">
                         <div class="list-group" style="font-size: 11px;" id="pilihan-kategori-1">
                             <?php foreach ($data->kategori as $parent1) : ?>
-                                <button type="button" class="list-group-item list-group-item-action" value="<?= $parent1->id ?>"><?= $parent1->kategori ?></button>
+                                <button type="button" class="list-group-item list-group-item-action" data-name="<?= $parent1->kategori ?>" value="<?= $parent1->id ?>"><?= $parent1->kategori ?></button>
                             <?php endforeach; ?>
                         </div>
                     </div>
@@ -525,7 +461,50 @@
 </style>
 
 <script>
-    function selectKategori2(parent, subparent) {
+    // KATEGORI --------------------
+    $(document).ready(function() {
+        $('#pilihan-kategori-1 button').on('click', function() {
+            $('#pilihan-kategori-1 button').removeClass('active');
+            $(this).addClass('active');
+            var ct1 = $(this).val();
+        });
+
+        $('#pilihan-kategori-1 button').on('click', function() {
+            var ct1 = $(this).val();
+            const name = $(this).data('name');
+            $("#txtKategori_1").val(ct1);
+            $("#txtKategori_2").val('');
+            $("#txtKategori_3").val('');
+            $("#txtKategori_4").val('');
+            $("#fillKategori1").html(name);
+            $("#fillKategori2").html('');
+            $("#fillKategori3").html('');
+            $("#fillKategori4").html('');
+            $("#pilihan-kategori-3").html('');
+            $("#pilihan-kategori-4").html('');
+
+
+            $.ajax({
+                url: baseurl + "/admin/produk/ajax/kategori/parent/",
+                data: {
+                    ct1
+                },
+                method: "POST",
+                success: function(response) {
+                    $("#pilihan-kategori-2").html(response);
+                }
+            })
+        });
+    });
+
+    function selectKategori2(parent, subparent, name) {
+        $("#txtKategori_2").val(subparent);
+        $("#txtKategori_3").val('');
+        $("#txtKategori_4").val('');
+        $("#fillKategori2").html('>' + name);
+        $("#fillKategori3").html('');
+        $("#fillKategori4").html('');
+        $("#pilihan-kategori-4").html('');
         $.ajax({
             url: baseurl + "/admin/produk/ajax/kategori/subkategori1/self/",
             data: {
@@ -550,7 +529,11 @@
         })
     }
 
-    function selectKategori3(parent, subparent) {
+    function selectKategori3(parent, subparent, name) {
+        $("#txtKategori_3").val(subparent);
+        $("#txtKategori_4").val('');
+        $("#fillKategori3").html('>' + name);
+        $("#fillKategori4").html('');
         $.ajax({
             url: baseurl + "/admin/produk/ajax/kategori/subkategori2/self/",
             data: {
@@ -575,7 +558,9 @@
         })
     }
 
-    function selectKategori4(parent, subparent) {
+    function selectKategori4(parent, subparent, name) {
+        $("#txtKategori_4").val(subparent);
+        $("#fillKategori4").html('>' + name);
         $.ajax({
             url: baseurl + "/admin/produk/ajax/kategori/subkategori3/self/",
             data: {
@@ -588,51 +573,10 @@
             }
         })
     }
+</script>
 
+<script>
     $(document).ready(function() {
-        //START >> Pilihan Kategori
-        $('#pilihan-kategori-1 button').on('click', function() {
-            $('#pilihan-kategori-1 button').removeClass('active');
-            $(this).addClass('active');
-            var ct1 = $(this).val();
-            // alert(ct1);
-        });
-        // $('#pilihan-kategori-2 button').on('click', function() {
-        //     $('#pilihan-kategori-2 button').removeClass('active');
-        //     // $(this).find('#pilihan-kategori-2 button').addClass('active');
-        //     $(this).addClass('.active');
-        //     var ct1 = $(this).val();
-        //     alert(ct1);
-        // });
-        // $('#pilihan-kategori-3 button').on('click', function() {
-        //     $('#pilihan-kategori-3 button').removeClass('active');
-        //     $(this).addClass('active');
-        // });
-        // $('#pilihan-kategori-4 button').on('click', function() {
-        //     $('#pilihan-kategori-4 button').removeClass('active');
-        //     $(this).addClass('active');
-        // });
-        //END >> Pilihan Kategori
-
-
-        //START >> Tampilan Kategori
-        $('#pilihan-kategori-1 button').on('click', function() {
-            var ct1 = $(this).val();
-            $.ajax({
-                url: baseurl + "/admin/produk/ajax/kategori/parent/",
-                data: {
-                    ct1
-                },
-                method: "POST",
-                success: function(response) {
-                    $("#pilihan-kategori-2").html(response);
-                    // $("#kategori2").html(response);
-                }
-            })
-        });
-        //END >> Tampilan Kategori
-
-
         //START >> ADD-MORE
         $(".add-more").click(function() {
             var html = $(".copy").html();
@@ -728,18 +672,47 @@
 </script>
 
 <script>
-    // $(document).ready(function() {
-    //     var rand = Math.random();
-    //     $('#btnADD').click(function() {
-    //         $(this).parents("input[name='txtVarianBerat[]']").val(rand);
-    //         // alert(rand);
-    //     })
-    // });
+    // UPLOAD IMAGE --------------------------
+    $("#img1").click(function() {
+        $("#file1").trigger("click");
+    });
+    $(document).ready(function() {
+        $("#file1").on("change", function() {
+            var fd = new FormData();
+            var files = $("#file1")[0].files[0];
+            fd.append("file", files);
 
-    // function tampilkan() {
-    //     var rand = Math.random();
-    //     $(this).val('haloo')
-    // }
+            $.ajax({
+                url: baseurl + "/admin/produk/ajax/media/upload/",
+                type: "post",
+                data: fd,
+                contentType: false,
+                processData: false,
+                success: function(response) {},
+            });
+        });
+    })
+</script>
+
+<script>
+    // DELETE IMAGE ---------------------------
+    $(document).ready(function() {
+        $(".btn-media-delete").on("click", function() {
+            const id = $(this).data("id");
+            $.ajax({
+                url: baseurl + "/admin/produk/ajax/media/delete/",
+                data: {
+                    id
+                },
+                type: "POST",
+                success: function() {},
+            });
+        });
+    });
+</script>
+
+<script>
+
 </script>
 
 

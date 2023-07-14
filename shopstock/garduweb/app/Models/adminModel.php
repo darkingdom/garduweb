@@ -92,6 +92,13 @@ class AdminModel
         return $this->db->single();
     }
 
+    public function getMediaProdukByID($data)
+    {
+        $this->db->query("SELECT * FROM `tb_produk_media` WHERE id=:id LIMIT 1");
+        $this->db->bind('id', (string) $data);
+        return $this->db->single();
+    }
+
 
     // END GET =====================================================================================================
 
@@ -196,7 +203,7 @@ class AdminModel
 
     public function getAllImageProdukByUniqID($data)
     {
-        $this->db->query("SELECT * FROM `tb_produk_media` WHERE id_uniq_produk=:uniq ORDER BY `id` DESC");
+        $this->db->query("SELECT * FROM `tb_produk_media` WHERE id_uniq_produk=:uniq ORDER BY `id` ASC");
         $this->db->bind('uniq', $data);
         return $this->db->resultSet();
     }
@@ -249,7 +256,6 @@ class AdminModel
         $this->db->bind('uuid', $uuid);
         return $this->db->single();
     }
-
 
     public function countPajakBulanan($data)
     {
@@ -448,13 +454,30 @@ class AdminModel
     public function updateProduk($data)
     {
         $slug = Slug::textToSlug($data['txtNamaProduk']);
-        $this->db->query("UPDATE tb_produk SET nama_produk=:namaProduk, slug_produk='$slug'  WHERE uniq_id=:unique");
+        $this->db->query("UPDATE tb_produk SET nama_produk=:namaProduk, slug_produk='$slug', 
+                                                id_kategori_1=:kategori_1, id_kategori_2=:kategori_2, 
+                                                id_kategori_3=:kategori_3, id_kategori_4=:kategori_4,
+                                                id_brand=:brand, deskripsi_produk=:deskripsi,
+                                                varian=:varian, varian_warna=:varian_warna,
+                                                varian_ukuran=:varian_ukuran, varian_jenis=:varian_jenis
+                                                WHERE uniq_id=:unique");
         $this->db->bind('unique', $data['unique']);
         $this->db->bind('namaProduk', $data['txtNamaProduk']);
+        $this->db->bind('kategori_1', $data['txtKategori_1']);
+        $this->db->bind('kategori_2', $data['txtKategori_2']);
+        $this->db->bind('kategori_3', $data['txtKategori_3']);
+        $this->db->bind('kategori_4', $data['txtKategori_4']);
+        $this->db->bind('brand', $data['selBrand']);
+        $this->db->bind('deskripsi', $data['txtDeskripsi']);
+        $this->db->bind('varian', $data['btn-check-varian-enable']);
+        $this->db->bind('varian_warna', $data['btn-check-varian-warna']);
+        $this->db->bind('varian_ukuran', $data['btn-check-varian-ukuran']);
+        $this->db->bind('varian_jenis', $data['btn-check-varian-jenis']);
 
         $this->db->execute();
         return $this->db->rowCount();
     }
+
     // END UPDATE DATA =============================================================================================
 
     // CREATE ======================================================================================================
@@ -618,6 +641,30 @@ class AdminModel
         return $this->db->rowCount();
     }
 
+    public function simpanImageProduk($data)
+    {
+        $this->db->query("INSERT INTO `tb_produk_media` (id_uniq_produk, url_image)VALUES(:id_produk,:nama_image)");
+        $this->db->bind('id_produk', $data['unique']);
+        $this->db->bind('nama_image', $data['produk']);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
+    public function simpanVarianProduk($data)
+    {
+        $this->db->query("INSERT INTO `tb_produk_varian` (id_uniq_produk, warna,ukuran,jenis,berat,sku,stok,harga)VALUES(:id_produk,:warna,:ukuran,:jenis,:berat,:sku,:stok,:harga)");
+        $this->db->bind('id_produk', $data['id_produk']);
+        $this->db->bind('warna', $data['varianWarna']);
+        $this->db->bind('ukuran', $data['varianUkuran']);
+        $this->db->bind('jenis', $data['varianJenis']);
+        $this->db->bind('berat', $data['varianBerat']);
+        $this->db->bind('sku', $data['varianSKU']);
+        $this->db->bind('stok', $data['varianStock']);
+        $this->db->bind('harga', $data['varianHarga']);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
     // END CREATE ==================================================================================================
 
     // DELETE DATA =================================================================================================
@@ -708,6 +755,22 @@ class AdminModel
         $this->db->execute();
         return $this->db->rowCount();
     }
+
+    public function deleteMediaProdukByID($data)
+    {
+        $this->db->query("DELETE FROM `tb_produk_media` WHERE id=:id");
+        $this->db->bind('id', (string) $data);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
+    public function deleteAllVarianByUniqID($data)
+    {
+        $this->db->query("DELETE FROM `tb_produk_varian` WHERE id_uniq_produk=:id");
+        $this->db->bind('id', (string) $data);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
     // END DELETE DATA =============================================================================================
 
 
@@ -733,6 +796,14 @@ class AdminModel
     {
         $db = new Database('db_indonesia');
         $db->query("SELECT * FROM `regencies` WHERE id=:id LIMIT 1");
+        $db->bind('id', (string)$data);
+        return $db->single();
+    }
+
+    static public function STATICgetKategoriByID($data)
+    {
+        $db = new Database();
+        $db->query("SELECT * FROM `tb_kategori` WHERE id=:id");
         $db->bind('id', (string)$data);
         return $db->single();
     }

@@ -6,6 +6,8 @@ elseif ($page == 'form') :
     $data['produk'] = $this->model->getProdukByUniqID($subpage);
     $data['image'] = $this->model->getAllImageProdukByUniqID($subpage);
     $data['kategori'] = $this->model->getAllKategoriParent();
+    $data['brand'] = $this->model->getAllBrand();
+    $data['color'] = $this->model->getAllColor();
     $this->page->formProduk($data);
 elseif ($page == 'lihat-semua') :
     $data[] = '';
@@ -21,6 +23,7 @@ elseif ($page == 'action') :
                 $unique = Auth::long_token();
                 $simpan = $this->model->simpanNewProduk($unique);
                 if ($simpan > 0) :
+                    //Session::set("uniqProduk", $unique);
                     $this->page->redirect('admin/produk/form/' . $unique);
                 else :
                     $this->page->redirect('admin/produk/list-produk');
@@ -29,6 +32,21 @@ elseif ($page == 'action') :
         elseif ($act == 'edit') :
             if (isset($post['btn-update'])) :
                 if (!empty($post['txtNamaProduk'])) :
+                    @$this->model->deleteAllVarianByUniqID($post['unique']);
+                    if ($post['btn-check-varian-enable'] == '1') :
+                        $total = $post['varianHarga'];
+                        for ($i = 0; $i < $total; $i++) :
+                            $data['id_produk'] = $post['unique'];
+                            $data['varianWarna'] = @$post['varianWarna'][$i];
+                            $data['varianUkuran'] = @$post['varianUkuran'][$i];
+                            $data['varianJenis'] = @$post['varianJenis'][$i];
+                            $data['varianStock'] = @$post['varianStock'][$i];
+                            $data['varianSKU'] = @$post['varianSKU'][$i];
+                            $data['varianBerat'] = @$post['varianBerat'][$i];
+                            $data['varianHarga'] = @$post['varianHarga'][$i];
+                        //$this->model->simpanVarianProduk($data);
+                        endfor;
+                    endif;
                     $simpan = $this->model->updateProduk($post);
                     if ($simpan > 0) :
                         Flasher::setFlash("BERHASIL", 'success');
@@ -63,13 +81,13 @@ elseif ($page == 'ajax') :
         if ($act == 'parent') :
             $kategori = $this->model->getAllSubparentByIDParent($post['ct1']);
             foreach ($kategori as $kategori) :
-                echo "<button type='button' class='list-group-item list-group-item-action' value='{$kategori->id}'  onclick='javascript:selectKategori2({$post['ct1']},{$kategori->id})'>{$kategori->kategori}</button>";
+                echo "<button type='button' class='list-group-item list-group-item-action' value='{$kategori->id}'  onclick='javascript:selectKategori2({$post['ct1']},{$kategori->id},\"{$kategori->kategori}\")'>{$kategori->kategori}</button>";
             endforeach;
         elseif ($act == 'subkategori1') :
             if ($uniq == 'parent') :
                 $kategori = $this->model->getAllSubparentByIDParent($post['ct1']);
                 foreach ($kategori as $kategori) :
-                    echo "<button type='button' class='list-group-item list-group-item-action' value='{$kategori->id}'  onclick='javascript:selectKategori3({$post['ct1']},{$kategori->id})'>{$kategori->kategori}</button>";
+                    echo "<button type='button' class='list-group-item list-group-item-action' value='{$kategori->id}'  onclick='javascript:selectKategori3({$post['ct1']},{$kategori->id},\"{$kategori->kategori}\")'>{$kategori->kategori}</button>";
                 endforeach;
             elseif ($uniq == 'self') :
                 $kategori = $this->model->getAllSubparentByIDParent($post['parent']);
@@ -79,7 +97,7 @@ elseif ($page == 'ajax') :
                     else :
                         $aktif = '';
                     endif;
-                    echo "<button type='button' class='{$aktif} list-group-item list-group-item-action' value='{$kategori->id}'  onclick='javascript:selectKategori2({$post['parent']},{$kategori->id})'>{$kategori->kategori}</button>";
+                    echo "<button type='button' class='{$aktif} list-group-item list-group-item-action' value='{$kategori->id}'  onclick='javascript:selectKategori2({$post['parent']},{$kategori->id},\"{$kategori->kategori}\")'>{$kategori->kategori}</button>";
                     $aktif = '';
                 endforeach;
             endif;
@@ -87,7 +105,7 @@ elseif ($page == 'ajax') :
             if ($uniq == 'parent') :
                 $kategori = $this->model->getAllSubparentByIDParent($post['ct1']);
                 foreach ($kategori as $kategori) :
-                    echo "<button type='button' class='list-group-item list-group-item-action' value='{$kategori->id}'  onclick='javascript:selectKategori4({$post['ct1']},{$kategori->id})'>{$kategori->kategori}</button>";
+                    echo "<button type='button' class='list-group-item list-group-item-action' value='{$kategori->id}'  onclick='javascript:selectKategori4({$post['ct1']},{$kategori->id},\"{$kategori->kategori}\")'>{$kategori->kategori}</button>";
                 endforeach;
             elseif ($uniq == 'self') :
                 $kategori = $this->model->getAllSubparentByIDParent($post['parent']);
@@ -97,7 +115,7 @@ elseif ($page == 'ajax') :
                     else :
                         $aktif = '';
                     endif;
-                    echo "<button type='button' class='{$aktif} list-group-item list-group-item-action' value='{$kategori->id}'  onclick='javascript:selectKategori3({$post['parent']},{$kategori->id})'>{$kategori->kategori}</button>";
+                    echo "<button type='button' class='{$aktif} list-group-item list-group-item-action' value='{$kategori->id}'  onclick='javascript:selectKategori3({$post['parent']},{$kategori->id},\"{$kategori->kategori}\")'>{$kategori->kategori}</button>";
                     $aktif = '';
                 endforeach;
             endif;
@@ -110,10 +128,25 @@ elseif ($page == 'ajax') :
                     else :
                         $aktif = '';
                     endif;
-                    echo "<button type='button' class='{$aktif} list-group-item list-group-item-action' value='{$kategori->id}'  onclick='javascript:selectKategori4({$post['parent']},{$kategori->id})'>{$kategori->kategori}</button>";
+                    echo "<button type='button' class='{$aktif} list-group-item list-group-item-action' value='{$kategori->id}'  onclick='javascript:selectKategori4({$post['parent']},{$kategori->id},\"{$kategori->kategori}\")'>{$kategori->kategori}</button>";
                     $aktif = '';
                 endforeach;
             endif;
+        endif;
+    elseif ($subpage == 'media') :
+        $files = $_FILES;
+        $unique = Session::get("uniqProduk");
+        if ($act == 'upload') :
+            $upload = Media::uploadImage($files, 'produk');
+            if ($upload != 'failed') :
+                @$this->model->simpanImageProduk(["unique" => $unique, "produk" => $upload]);
+            endif;
+            $this->page->redirect('admin/produk/form/' . $unique);
+        elseif ($act == 'delete') :
+            $image = $this->model->getMediaProdukByID($post['id'])->url_image;
+            Media::deleteImage($image);
+            $this->model->deleteMediaProdukByID($post['id']);
+            $this->page->redirect('admin/produk/form/' . $unique);
         endif;
     endif;
 endif;

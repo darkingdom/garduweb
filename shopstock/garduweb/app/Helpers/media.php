@@ -15,6 +15,11 @@ class Media
             $newThumb   = 200;
             $newIcon    = 80;
             $prefixName = 'LOGO-';
+        } elseif ($categories == 'produk') {
+            $newSize    = 800;
+            $newThumb   = 200;
+            $newIcon    = 80;
+            $prefixName = 'Produk-';
         } else {
             $newSize    = 800;
             $newThumb   = 200;
