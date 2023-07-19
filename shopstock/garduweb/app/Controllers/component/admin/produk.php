@@ -8,10 +8,14 @@ elseif ($page == 'form') :
     $data['kategori'] = $this->model->getAllKategoriParent();
     $data['brand'] = $this->model->getAllBrand();
     $data['color'] = $this->model->getAllColor();
+    $data['varian'] = $this->model->getAllVarianByUniqID($subpage);
+    $data['supplier'] = $this->model->getAllSupplier();
+    $data['gudang'] = $this->model->getAllGudang();
     $this->page->formProduk($data);
 elseif ($page == 'lihat-semua') :
     $data[] = '';
     $this->page->produk($data);
+
 
 
 //---- ACTION
@@ -34,7 +38,7 @@ elseif ($page == 'action') :
                 if (!empty($post['txtNamaProduk'])) :
                     @$this->model->deleteAllVarianByUniqID($post['unique']);
                     if ($post['btn-check-varian-enable'] == '1') :
-                        $total = $post['varianHarga'];
+                        $total = count($post['varianHarga']);
                         for ($i = 0; $i < $total; $i++) :
                             $data['id_produk'] = $post['unique'];
                             $data['varianWarna'] = @$post['varianWarna'][$i];
@@ -44,15 +48,17 @@ elseif ($page == 'action') :
                             $data['varianSKU'] = @$post['varianSKU'][$i];
                             $data['varianBerat'] = @$post['varianBerat'][$i];
                             $data['varianHarga'] = @$post['varianHarga'][$i];
-                        //$this->model->simpanVarianProduk($data);
+                            if ($data['varianHarga'] != '') :
+                                $this->model->simpanVarianProduk($data);
+                            endif;
                         endfor;
                     endif;
                     $simpan = $this->model->updateProduk($post);
-                    if ($simpan > 0) :
-                        Flasher::setFlash("BERHASIL", 'success');
-                    else :
-                        Flasher::setFlash("GAGAL", 'danger');
-                    endif;
+                // if ($simpan > 0) :
+                //     Flasher::setFlash("BERHASIL", 'success');
+                // else :
+                //     Flasher::setFlash("GAGAL", 'danger');
+                // endif;
                 else :
                     Flasher::setFlash("Form tidak boleh kosong", 'danger');
                 endif;
@@ -147,6 +153,17 @@ elseif ($page == 'ajax') :
             Media::deleteImage($image);
             $this->model->deleteMediaProdukByID($post['id']);
             $this->page->redirect('admin/produk/form/' . $unique);
+        endif;
+    elseif ($subpage == 'gudang') :
+        if ($act == 'etalase') :
+            if ($post['id'] == '0') :
+                echo "<option value=\"0\">Pilihan...</option>";
+            else :
+                $etalase = $this->model->AJAXgelAllEtalaseByIDGudang($post['id']);
+                foreach ($etalase as $etalase) :
+                    echo "<option value=\"{$etalase->id}\">{$etalase->nama_etalase}</option>";
+                endforeach;
+            endif;
         endif;
     endif;
 endif;

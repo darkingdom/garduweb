@@ -42,7 +42,7 @@ endif
                 <div class="row mb-3">
                     <label for="txtKeterangan" class="col-sm-2 col-form-label text-nowrap">Info tambahan</label>
                     <div class="col-sm-10">
-                        <textarea type="text" class="form-control" id="txtKeterangan" name="txtKeterangan"><?= @$data->supplier->keterangan ?>"</textarea>
+                        <textarea type="text" class="form-control" id="txtKeterangan" name="txtKeterangan"><?= @$data->supplier->keterangan ?></textarea>
                     </div>
                 </div>
             </form>

@@ -208,6 +208,13 @@ class AdminModel
         return $this->db->resultSet();
     }
 
+    public function getAllVarianByUniqID($data)
+    {
+        $this->db->query("SELECT * FROM `tb_produk_varian` WHERE id_uniq_produk=:uniq ORDER BY `id` ASC");
+        $this->db->bind('uniq', $data);
+        return $this->db->resultSet();
+    }
+
     // END GET ALL =================================================================================================
 
     // COUNT DATA ==================================================================================================
@@ -459,7 +466,11 @@ class AdminModel
                                                 id_kategori_3=:kategori_3, id_kategori_4=:kategori_4,
                                                 id_brand=:brand, deskripsi_produk=:deskripsi,
                                                 varian=:varian, varian_warna=:varian_warna,
-                                                varian_ukuran=:varian_ukuran, varian_jenis=:varian_jenis
+                                                varian_ukuran=:varian_ukuran, varian_jenis=:varian_jenis,
+                                                kondisi=:kondisi, url_video=:video,
+                                                dropship=:dropship, id_supplier=:supplier,
+                                                id_gudang=:gudang, id_etalase=:etalase,
+                                                publikasi=:publikasi
                                                 WHERE uniq_id=:unique");
         $this->db->bind('unique', $data['unique']);
         $this->db->bind('namaProduk', $data['txtNamaProduk']);
@@ -473,6 +484,13 @@ class AdminModel
         $this->db->bind('varian_warna', $data['btn-check-varian-warna']);
         $this->db->bind('varian_ukuran', $data['btn-check-varian-ukuran']);
         $this->db->bind('varian_jenis', $data['btn-check-varian-jenis']);
+        $this->db->bind('kondisi', $data['txtKondisi']);
+        $this->db->bind('video', $data['txtUrlYoutube']);
+        $this->db->bind('dropship', $data['switchDropship']);
+        $this->db->bind('supplier', $data['selSupplier']);
+        $this->db->bind('gudang', $data['selGudang']);
+        $this->db->bind('etalase', $data['selEtalase']);
+        $this->db->bind('publikasi', $data['txtPublikasi']);
 
         $this->db->execute();
         return $this->db->rowCount();
@@ -807,6 +825,13 @@ class AdminModel
         $db->bind('id', (string)$data);
         return $db->single();
     }
+    static public function STATICgetEtalaseByID($data)
+    {
+        $db = new Database();
+        $db->query("SELECT * FROM `tb_etalase` WHERE id=:id");
+        $db->bind('id', (string)$data);
+        return $db->single();
+    }
     // END STATIC DATA =============================================================================================
 
     // START AJAX DATA =============================================================================================
@@ -854,6 +879,14 @@ class AdminModel
         $db->query("SELECT COUNT(*) AS total FROM `tb_kategori` WHERE parent_1=:id");
         $db->bind('id', (string)$data);
         return $db->single();
+    }
+
+    static public function AJAXgelAllEtalaseByIDGudang($data)
+    {
+        $db = new Database();
+        $db->query("SELECT * FROM `tb_etalase` WHERE id_gudang=:id");
+        $db->bind('id', (string)$data);
+        return $db->resultSet();
     }
     // END AJAX DATA =============================================================================================
 }

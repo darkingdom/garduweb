@@ -152,32 +152,40 @@
                             <th>Harga (Rp)</th>
                             <th></th>
                         </tr>
-                        <tr>
-                            <td class="custom-varian-warna bg-primary <?= $showWarna ?>">
-                                <!-- <input type="text" style="width: 100px;"> -->
-                                <select id="varianWarna[]" name="varianWarna[]" style="width: 100px;">
-                                    <option value="0">Pilihan</option>
-                                    <?php foreach ($data->color as $color) : ?>
-                                        <option value="<?= $color->id ?>"><?= $color->nama_color ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </td>
-                            <td class="custom-varian-ukuran bg-danger <?= $showUkuran ?>">
-                                <input type="text" id="varianUkuran[]" name="varianUkuran[]" style="width: 100px;">
-                            </td>
-                            <td class="custom-varian-jenis bg-warning <?= $showJenis ?>">
-                                <input type="text" id="varianJenis[]" name="varianJenis[]" style="width: 100px;">
-                            </td>
-                            <td><input type="text" id="varianBerat[]" name="varianBerat[]" style="width: 100px;"></td>
-                            <td><input type="text" id="varianStock[]" name="varianStock[]" style="width: 100px;"></td>
-                            <td><input type="text" id="varianSKU[]" name="varianSKU[]" style="width: 100px;"></td>
-                            <td><input type="text" id="varianHarga[]" name="varianHarga[]" style="width: 100px;"></td>
-                            <td>
-                                <button class="btn btn-success add-more btn-sm" type="button">
-                                    <i class="fa-solid fa-plus"></i>
-                                </button>
-                            </td>
-                        </tr>
+                        <?php
+                        foreach ($data->varian as $varian) :
+                        ?>
+                            <tr class="listVarian">
+                                <td class="custom-varian-warna bg-primary <?= $showWarna ?>">
+                                    <select id="varianWarna[]" name="varianWarna[]" style="width: 100px;">
+                                        <option value="0">Pilihan</option>
+                                        <?php foreach ($data->color as $color) : ?>
+                                            <option value="<?= $color->id ?>" <?php if ($color->id == $varian->warna) echo "selected"; ?>><?= $color->nama_color ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </td>
+                                <td class="custom-varian-ukuran bg-danger <?= $showUkuran ?>">
+                                    <input type="text" id="varianUkuran[]" name="varianUkuran[]" style="width: 100px;" value="<?= $varian->ukuran ?>">
+                                </td>
+                                <td class="custom-varian-jenis bg-warning <?= $showJenis ?>">
+                                    <input type="text" id="varianJenis[]" name="varianJenis[]" style="width: 100px;" value="<?= $varian->jenis ?>">
+                                </td>
+                                <td><input type="text" id="varianBerat[]" name="varianBerat[]" style="width: 100px;" value="<?= $varian->berat ?>"></td>
+                                <td><input type="text" id="varianStock[]" name="varianStock[]" style="width: 100px;" value="<?= $varian->stok ?>"></td>
+                                <td><input type="text" id="varianSKU[]" name="varianSKU[]" style="width: 100px;" value="<?= $varian->sku ?>"></td>
+                                <td><input type="text" id="varianHarga[]" name="varianHarga[]" style="width: 100px;" value="<?= $varian->harga ?>"></td>
+                                <td>
+                                    <button class="btn btn-danger list-remove btn-sm" type="button">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                    <button class="btn btn-success add-more btn-sm" type="button">
+                                        <i class="fa-solid fa-plus"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php
+                        endforeach;
+                        ?>
                     </table>
                 </div>
             </div>
@@ -185,13 +193,24 @@
             <div class="copy hide">
                 <table class="control-group">
                     <tr>
-                        <td class="custom-varian-warna bg-primary <?= $showWarna ?>"><input type="text" style="width: 100px;"></td>
-                        <td class="custom-varian-ukuran bg-danger <?= $showUkuran ?>"><input type="text" style="width: 100px;"></td>
-                        <td class="custom-varian-jenis bg-warning <?= $showJenis ?>"><input type="text" style="width: 100px;"></td>
-                        <td><input type="text" style="width: 100px;"></td>
-                        <td><input type="text" style="width: 100px;"></td>
-                        <td><input type="text" style="width: 100px;"></td>
-                        <td><input type="text" style="width: 100px;"></td>
+                        <td class="custom-varian-warna bg-primary <?= $showWarna ?>">
+                            <select id="varianWarna[]" name="varianWarna[]" style="width: 100px;">
+                                <option value="0">Pilihan</option>
+                                <?php foreach ($data->color as $color) : ?>
+                                    <option value="<?= $color->id ?>"><?= $color->nama_color ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </td>
+                        <td class="custom-varian-ukuran bg-danger <?= $showUkuran ?>">
+                            <input type="text" id="varianUkuran[]" name="varianUkuran[]" style="width: 100px;">
+                        </td>
+                        <td class="custom-varian-jenis bg-warning <?= $showJenis ?>">
+                            <input type="text" id="varianJenis[]" name="varianJenis[]" style="width: 100px;">
+                        </td>
+                        <td><input type="text" id="varianBerat[]" name="varianBerat[]" style="width: 100px;"></td>
+                        <td><input type="text" id="varianStock[]" name="varianStock[]" style="width: 100px;"></td>
+                        <td><input type="text" id="varianSKU[]" name="varianSKU[]" style="width: 100px;"></td>
+                        <td><input type="text" id="varianHarga[]" name="varianHarga[]" style="width: 100px;"></td>
                         <td>
                             <button class="btn btn-danger remove btn-sm" type="button">
                                 <i class="fa-solid fa-trash"></i>
@@ -252,17 +271,25 @@
                         <div class="row">
                             <div class="col-md-2">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                    <label class="form-check-label" for="flexRadioDefault1">
+                                    <input class="form-check-input" type="radio" name="txtKondisi" id="txtKondisi1" value="Baru" <?php if ($data->produk->kondisi == 'Baru') echo 'checked'; ?>>
+                                    <label class="form-check-label" for="txtKondisi1">
                                         Baru
                                     </label>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-                                    <label class="form-check-label" for="flexRadioDefault2">
+                                    <input class="form-check-input" type="radio" name="txtKondisi" id="txtKondisi2" value="Bekas" <?php if ($data->produk->kondisi == 'Bekas') echo 'checked'; ?>>
+                                    <label class="form-check-label" for="txtKondisi2">
                                         Bekas
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="txtKondisi" id="txtKondisi3" value="Rekondisi" disabled>
+                                    <label class="form-check-label" for="txtKondisi3">
+                                        Rekondisi
                                     </label>
                                 </div>
                             </div>
@@ -272,28 +299,26 @@
                 <div class="row mb-3">
                     <label for="txtNamaWarna" class="col-sm-2 col-form-label text-nowrap">URL Video</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="txtPajak" name="txtPajak" placeholder="video youtube">
+                        <input type="text" class="form-control" id="txtUrlYoutube" name="txtUrlYoutube" placeholder="video youtube" value="<?= $data->produk->url_video ?>">
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="txtNamaWarna" class="col-sm-2 col-form-label text-nowrap">Stok Dropship</label>
                     <div class="col-sm-10">
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-                            <label class="form-check-label" for="flexSwitchCheckDefault">Dropship</label>
+                            <input class="form-check-input" type="checkbox" role="switch" id="switchDropship" name="switchDropship" value="1" <?php if ($data->produk->dropship == '1') echo "checked"; ?>>
+                            <label class="form-check-label" for="switchDropship">Dropship</label>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-2">Supplier</div>
                     <div class="col-sm-10">
-                        <select class="form-select" id="inputGroupSelect01">
-                            <option selected>Pilihan...</option>
-                            <option value="1" style="color: #ff0000; font-weight: bold;">
-                                Merah
-                            </option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        <select class="form-select" id="selSupplier" name="selSupplier">
+                            <option value="0">Pilihan...</option>
+                            <?php foreach ($data->supplier as $supplier) : ?>
+                                <option value="<?= $supplier->id ?>" <?php if ($supplier->id == $data->produk->id_supplier) echo "selected"; ?>><?= $supplier->nama_supplier ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                 </div>
@@ -305,26 +330,22 @@
                 <div class="row mb-3">
                     <div class="col-sm-2">Gudang</div>
                     <div class="col-sm-10">
-                        <select class="form-select" id="inputGroupSelect01">
-                            <option selected>Pilihan...</option>
-                            <option value="1" style="color: #ff0000; font-weight: bold;">
-                                Merah
-                            </option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        <select class="form-select" id="selGudang" name="selGudang">
+                            <option value="0">Pilihan...</option>
+                            <?php foreach ($data->gudang as $gudang) : ?>
+                                <option value="<?= $gudang->id ?>" <?php if ($gudang->id == $data->produk->id_gudang) echo "selected"; ?>><?= $gudang->nama_gudang ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-2">Etalase</div>
                     <div class="col-sm-10">
-                        <select class="form-select" id="inputGroupSelect01">
-                            <option selected>Pilihan...</option>
-                            <option value="1" style="color: #ff0000; font-weight: bold;">
-                                Merah
-                            </option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        <select class="form-select" id="selEtalase" name="selEtalase">
+                            <option value="0">Pilihan...</option>
+                            <?php if ($data->produk->id_etalase != '0' && $data->produk->id_etalase != '') : ?>
+                                <option value="<?= $data->produk->id_etalase ?>" selected><?= @AdminModel::STATICgetEtalaseByID($data->produk->id_etalase)->nama_etalase ?></option>
+                            <?php endif; ?>
                         </select>
                     </div>
                 </div>
@@ -339,16 +360,16 @@
                         <div class="row">
                             <div class="col-md-2">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="show1">
-                                    <label class="form-check-label" for="show1">
+                                    <input class="form-check-input" type="radio" name="txtPublikasi" id="txtPublikasi1" value="draft" <?php if ($data->produk->publikasi == 'draft') echo "checked" ?>>
+                                    <label class="form-check-label" for="txtPublikasi1">
                                         Sembunyikan
                                     </label>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="show">
-                                    <label class="form-check-label" for="show">
+                                    <input class="form-check-input" type="radio" name="txtPublikasi" id="txtPublikasi2" value="public" <?php if ($data->produk->publikasi == 'public') echo "checked" ?>>
+                                    <label class="form-check-label" for="txtPublikasi2">
                                         Tampilkan
                                     </label>
                                 </div>
@@ -576,8 +597,8 @@
 </script>
 
 <script>
+    //START >> ADD-MORE
     $(document).ready(function() {
-        //START >> ADD-MORE
         $(".add-more").click(function() {
             var html = $(".copy").html();
             $(".after-add-more").after(html);
@@ -586,31 +607,15 @@
         $("body").on("click", ".remove", function() {
             $(this).parents(".control-group").remove();
         });
-        //END >> ADD-MORE
+        $("body").on("click", ".list-remove", function() {
+            $(this).parents(".listVarian").remove();
+        });
     });
+    //END >> ADD-MORE
 </script>
 
 <script>
     $(document).ready(function() {
-
-        //Varian
-        // $("#pilihan-varian").addClass('hide');
-        // $("#btn-check-varian-enable").click(function() {
-        //     if ($('#btn-check-varian-enable').prop('checked') == true) {
-        //         $("#pilihan-varian").removeClass('hide');
-        //     } else {
-        //         $("#pilihan-varian").addClass('hide');
-        //         $("#custom-varian").addClass('hide');
-        //     }
-        // });
-
-
-        //start custom varian
-        // $(".custom-varian-warna").addClass('hide');
-        // $(".custom-varian-ukuran").addClass('hide');
-        // $(".custom-varian-jenis").addClass('hide');
-        // $(".custom-varian-lainnya").addClass('hide');
-        // $("#custom-varian").addClass('hide');
 
         // //varian warna
         $("#label-varian-warna").click(function() {
@@ -626,6 +631,7 @@
             if ($('#btn-check-varian-ukuran').prop('checked') == true) {
                 $(".custom-varian-ukuran").addClass('hide');
             } else {
+                $('input[name="varianUkuran[]"]').val('');
                 $(".custom-varian-ukuran").removeClass('hide');
                 $("#custom-varian").removeClass('hide');
             }
@@ -635,6 +641,7 @@
             if ($('#btn-check-varian-jenis').prop('checked') == true) {
                 $(".custom-varian-jenis").addClass('hide');
             } else {
+                $('input[name="varianJenis[]"]').val('');
                 $(".custom-varian-jenis").removeClass('hide');
                 $("#custom-varian").removeClass('hide');
             }
@@ -688,7 +695,9 @@
                 data: fd,
                 contentType: false,
                 processData: false,
-                success: function(response) {},
+                success: function(response) {
+                    location.reload();
+                },
             });
         });
     })
@@ -705,14 +714,30 @@
                     id
                 },
                 type: "POST",
-                success: function() {},
+                success: function() {
+                    location.reload()
+                },
             });
         });
     });
 </script>
 
 <script>
-
+    $(document).ready(function() {
+        $("#selGudang").on("change", function() {
+            const id = $(this).val();
+            $.ajax({
+                url: baseurl + "/admin/produk/ajax/gudang/etalase/",
+                data: {
+                    id: id
+                },
+                method: "POST",
+                success: function(response) {
+                    $("#selEtalase").html(response);
+                },
+            });
+        });
+    });
 </script>
 
 
