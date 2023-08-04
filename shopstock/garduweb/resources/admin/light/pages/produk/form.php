@@ -153,27 +153,65 @@
                             <th></th>
                         </tr>
                         <?php
-                        foreach ($data->varian as $varian) :
+                        if ($data->totalVarian->total > 0) :
                         ?>
-                            <tr class="listVarian">
+                            <?php
+                            foreach ($data->varian as $varian) :
+                            ?>
+                                <tr class="listVarian">
+                                    <td class="custom-varian-warna bg-primary <?= $showWarna ?>">
+                                        <select id="varianWarna[]" name="varianWarna[]" style="width: 100px;">
+                                            <option value="0">Pilihan</option>
+                                            <?php foreach ($data->color as $color) : ?>
+                                                <option value="<?= $color->id ?>" <?php if ($color->id == $varian->warna) echo "selected"; ?>><?= $color->nama_color ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </td>
+                                    <td class="custom-varian-ukuran bg-danger <?= $showUkuran ?>">
+                                        <input type="text" id="varianUkuran[]" name="varianUkuran[]" style="width: 100px;" value="<?= $varian->ukuran ?>">
+                                    </td>
+                                    <td class="custom-varian-jenis bg-warning <?= $showJenis ?>">
+                                        <input type="text" id="varianJenis[]" name="varianJenis[]" style="width: 100px;" value="<?= $varian->jenis ?>">
+                                    </td>
+                                    <td><input type="text" id="varianBerat[]" name="varianBerat[]" style="width: 100px;" value="<?= $varian->berat ?>"></td>
+                                    <td><input type="text" id="varianStock[]" name="varianStock[]" style="width: 100px;" value="<?= $varian->stok ?>"></td>
+                                    <td><input type="text" id="varianSKU[]" name="varianSKU[]" style="width: 100px;" value="<?= $varian->sku ?>"></td>
+                                    <td><input type="text" id="varianHarga[]" name="varianHarga[]" style="width: 100px;" value="<?= $varian->harga ?>"></td>
+                                    <td>
+                                        <button class="btn btn-danger list-remove btn-sm" type="button">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                        <button class="btn btn-success add-more btn-sm" type="button">
+                                            <i class="fa-solid fa-plus"></i>
+                                        </button>
+                                        <input id="varianUUID[]" name="varianUUID[]" type="hidden" value="<?= $varian->uuid ?>">
+                                    </td>
+                                </tr>
+                            <?php
+                            endforeach;
+                            ?>
+                        <?php
+                        else :
+                        ?>
+                            <tr>
                                 <td class="custom-varian-warna bg-primary <?= $showWarna ?>">
                                     <select id="varianWarna[]" name="varianWarna[]" style="width: 100px;">
                                         <option value="0">Pilihan</option>
                                         <?php foreach ($data->color as $color) : ?>
-                                            <option value="<?= $color->id ?>" <?php if ($color->id == $varian->warna) echo "selected"; ?>><?= $color->nama_color ?></option>
+                                            <option value="<?= $color->id ?>"><?= $color->nama_color ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </td>
                                 <td class="custom-varian-ukuran bg-danger <?= $showUkuran ?>">
-                                    <input type="text" id="varianUkuran[]" name="varianUkuran[]" style="width: 100px;" value="<?= $varian->ukuran ?>">
+                                    <input type="text" id="varianUkuran[]" name="varianUkuran[]" style="width: 100px;">
                                 </td>
                                 <td class="custom-varian-jenis bg-warning <?= $showJenis ?>">
-                                    <input type="text" id="varianJenis[]" name="varianJenis[]" style="width: 100px;" value="<?= $varian->jenis ?>">
+                                    <input type="text" id="varianJenis[]" name="varianJenis[]" style="width: 100px;">
                                 </td>
-                                <td><input type="text" id="varianBerat[]" name="varianBerat[]" style="width: 100px;" value="<?= $varian->berat ?>"></td>
-                                <td><input type="text" id="varianStock[]" name="varianStock[]" style="width: 100px;" value="<?= $varian->stok ?>"></td>
-                                <td><input type="text" id="varianSKU[]" name="varianSKU[]" style="width: 100px;" value="<?= $varian->sku ?>"></td>
-                                <td><input type="text" id="varianHarga[]" name="varianHarga[]" style="width: 100px;" value="<?= $varian->harga ?>"></td>
+                                <td><input type="text" id="varianBerat[]" name="varianBerat[]" style="width: 100px;"></td>
+                                <td><input type="text" id="varianStock[]" name="varianStock[]" style="width: 100px;"></td>
+                                <td><input type="text" id="varianSKU[]" name="varianSKU[]" style="width: 100px;"></td>
+                                <td><input type="text" id="varianHarga[]" name="varianHarga[]" style="width: 100px;"></td>
                                 <td>
                                     <button class="btn btn-danger list-remove btn-sm" type="button">
                                         <i class="fa-solid fa-trash"></i>
@@ -181,10 +219,11 @@
                                     <button class="btn btn-success add-more btn-sm" type="button">
                                         <i class="fa-solid fa-plus"></i>
                                     </button>
+                                    <input id="varianUUID[]" name="varianUUID[]" type="hidden">
                                 </td>
                             </tr>
                         <?php
-                        endforeach;
+                        endif;
                         ?>
                     </table>
                 </div>
@@ -215,6 +254,7 @@
                             <button class="btn btn-danger remove btn-sm" type="button">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
+                            <input id="varianUUID[]" name="varianUUID[]" type="hidden">
                         </td>
                     </tr>
                 </table>
@@ -615,8 +655,8 @@
 </script>
 
 <script>
+    //VARIAN ------------------------
     $(document).ready(function() {
-
         // //varian warna
         $("#label-varian-warna").click(function() {
             if ($('#btn-check-varian-warna').prop('checked') == true) {
@@ -659,6 +699,7 @@
 </script>
 
 <script>
+    //VARIAN ENABLE ---------------
     $(document).ready(function() {
         // $('#btn-check-varian-enable').click(function() {
         //     alert('buttn variasi');
@@ -723,6 +764,7 @@
 </script>
 
 <script>
+    //ETALASE ----------------
     $(document).ready(function() {
         $("#selGudang").on("change", function() {
             const id = $(this).val();

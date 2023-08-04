@@ -11,9 +11,11 @@ elseif ($page == 'form') :
     $data['varian'] = $this->model->getAllVarianByUniqID($subpage);
     $data['supplier'] = $this->model->getAllSupplier();
     $data['gudang'] = $this->model->getAllGudang();
+    $data['totalVarian'] = $this->model->countVarianByUniqID($subpage);
     $this->page->formProduk($data);
 elseif ($page == 'lihat-semua') :
-    $data[] = '';
+    $this->model->deleteProdukBlankTitle();
+    $data['produk'] = $this->model->getAllProduk();
     $this->page->produk($data);
 
 
@@ -40,6 +42,7 @@ elseif ($page == 'action') :
                     if ($post['btn-check-varian-enable'] == '1') :
                         $total = count($post['varianHarga']);
                         for ($i = 0; $i < $total; $i++) :
+                            $data['varianUUID'] = $post['varianUUID'][$i];
                             $data['id_produk'] = $post['unique'];
                             $data['varianWarna'] = @$post['varianWarna'][$i];
                             $data['varianUkuran'] = @$post['varianUkuran'][$i];
@@ -48,6 +51,11 @@ elseif ($page == 'action') :
                             $data['varianSKU'] = @$post['varianSKU'][$i];
                             $data['varianBerat'] = @$post['varianBerat'][$i];
                             $data['varianHarga'] = @$post['varianHarga'][$i];
+
+                            if ($post['varianUUID'][$i] == '' || empty($post['varianUUID'][$i])) $data['varianUUID'] = Auth::long_uuid();
+                            if ($post['btn-check-varian-warna'] != '1') $data['varianWarna'] = '';
+                            if ($post['btn-check-varian-ukuran'] != '1') $data['varianUkuran'] = '';
+                            if ($post['btn-check-varian-jenis'] != '1') $data['varianJenis'] = '';
                             if ($data['varianHarga'] != '') :
                                 $this->model->simpanVarianProduk($data);
                             endif;

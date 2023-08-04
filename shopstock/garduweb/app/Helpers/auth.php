@@ -46,7 +46,6 @@ class Auth
         $rand = rand(1000, 9999);
         $hash = $time . $rand;
         $uuid = md5($hash);
-        //$uuid = hash('sha256', $hash);
         $guidText =
             substr($uuid, 0, 8) . '-' .
             substr($uuid, 8, 4) . '-' .
@@ -61,7 +60,6 @@ class Auth
         $time = microtime(true);
         $rand = rand(1000, 9999);
         $hash = $rand . $time;
-        // $uuid = md5($hash);
         $uuid = hash('sha256', $hash);
         $guidText =
             substr($uuid, 0, 8) . '-' .

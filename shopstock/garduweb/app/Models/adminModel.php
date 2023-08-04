@@ -215,6 +215,12 @@ class AdminModel
         return $this->db->resultSet();
     }
 
+    public function getAllProduk()
+    {
+        $this->db->query("SELECT * FROM `tb_produk` ORDER BY `id` DESC");
+        return $this->db->resultSet();
+    }
+
     // END GET ALL =================================================================================================
 
     // COUNT DATA ==================================================================================================
@@ -283,6 +289,13 @@ class AdminModel
     {
         $this->db->query("SELECT COUNT(*) AS total FROM `tb_customer` WHERE username=:username");
         $this->db->bind('username', $data['txtUsername']);
+        return $this->db->single();
+    }
+
+    public function countVarianByUniqID($data)
+    {
+        $this->db->query("SELECT COUNT(*) AS total FROM `tb_produk_varian` WHERE id_uniq_produk=:uniq");
+        $this->db->bind('uniq', $data);
         return $this->db->single();
     }
 
@@ -574,6 +587,7 @@ class AdminModel
 
     public function newCustomer($data)
     {
+        $password = hash('sha256', $data['txtPassword']);
         $this->db->query("INSERT INTO `tb_customer` (tanggal_daftar, nama_customer, alamat, id_propinsi, id_kota, no_hp, email,username,password,status) VALUES 
                                                     (NOW(),:nama_customer,:alamat,:id_propinsi,:id_kota,:no_hp,:email,:username,:password,'1')");
         $this->db->bind('nama_customer', $data['txtNamaCustomer']);
@@ -583,7 +597,7 @@ class AdminModel
         $this->db->bind('no_hp', $data['txtNoHP']);
         $this->db->bind('email', $data['txtEmail']);
         $this->db->bind('username', $data['txtUsername']);
-        $this->db->bind('password', $data['txtPassword']);
+        $this->db->bind('password', $password);
         $this->db->execute();
         return $this->db->rowCount();
     }
@@ -670,7 +684,8 @@ class AdminModel
 
     public function simpanVarianProduk($data)
     {
-        $this->db->query("INSERT INTO `tb_produk_varian` (id_uniq_produk, warna,ukuran,jenis,berat,sku,stok,harga)VALUES(:id_produk,:warna,:ukuran,:jenis,:berat,:sku,:stok,:harga)");
+        $this->db->query("INSERT INTO `tb_produk_varian` (uuid,id_uniq_produk, warna,ukuran,jenis,berat,sku,stok,harga)VALUES(:uuid,:id_produk,:warna,:ukuran,:jenis,:berat,:sku,:stok,:harga)");
+        $this->db->bind('uuid', $data['varianUUID']);
         $this->db->bind('id_produk', $data['id_produk']);
         $this->db->bind('warna', $data['varianWarna']);
         $this->db->bind('ukuran', $data['varianUkuran']);
@@ -789,6 +804,13 @@ class AdminModel
         $this->db->execute();
         return $this->db->rowCount();
     }
+
+    public function deleteProdukBlankTitle()
+    {
+        $this->db->query("DELETE FROM `tb_produk` WHERE nama_produk=''");
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
     // END DELETE DATA =============================================================================================
 
 
@@ -830,6 +852,30 @@ class AdminModel
         $db = new Database();
         $db->query("SELECT * FROM `tb_etalase` WHERE id=:id");
         $db->bind('id', (string)$data);
+        return $db->single();
+    }
+
+    static public function STATICgetMediaProdukByUniqID($data)
+    {
+        $db = new Database();
+        $db->query("SELECT url_image FROM `tb_produk_media` WHERE id_uniq_produk=:id ORDER BY id ASC LIMIT 1");
+        $db->bind('id', $data);
+        return $db->single();
+    }
+
+    static public function STATICgetAllVarianByUniqID($data)
+    {
+        $db = new Database();
+        $db->query("SELECT * FROM `tb_produk_varian` WHERE id_uniq_produk=:id ORDER BY id ASC");
+        $db->bind('id', $data);
+        return $db->resultSet();
+    }
+
+    static public function STATICgetColorByID($data)
+    {
+        $db = new Database();
+        $db->query("SELECT * FROM `tb_color` WHERE id=:id");
+        $db->bind('id', $data);
         return $db->single();
     }
     // END STATIC DATA =============================================================================================
