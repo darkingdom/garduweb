@@ -12,7 +12,7 @@ elseif ($page == 'lihat-semua') :
 elseif ($page == 'edit') :
     $id = isset($_GET['id']) ? $_GET['id'] : '';
     if ($id != '') :
-        $data['customer'] = $this->model->getCustomerByID($id);
+        $data['customer'] = $this->model->getCustomerByUUID($id);
     endif;
     $data['propinsi'] = $this->model->getAllPropinsi();
     $this->page->customerEdit($data);
@@ -66,7 +66,7 @@ elseif ($page == 'action') :
                     // if ($username > 0) :
                     //     Flasher::setFlash("Username sudah dipakai", 'danger');
                     // else :
-                    $simpan = $this->model->updateCustomer($post);
+                    $simpan = $this->model->updateCustomerByUUID($post);
                     if ($simpan > 0) :
                         Flasher::setFlash("BERHASIL", 'success');
                     else :
@@ -116,7 +116,7 @@ elseif ($page == 'ajax') :
         endforeach;
     elseif ($subpage == 'baru') :
         if ($act == 'detail') :
-            $customer = $this->model->getCustomerByID($post['id']);
+            $customer = $this->model->getCustomerByUUID($post['id']);
             $propinsi = AdminModel::staticPropinsiByID($customer->id_propinsi)->name;
             $kota = AdminModel::staticKotaByID($customer->id_kota)->name;
             if ($customer->status == '1') $status = "<span class='text-success fw-bold'>AKTIF</span>";

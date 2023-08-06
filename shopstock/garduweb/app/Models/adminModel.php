@@ -412,10 +412,10 @@ class AdminModel
         return $this->db->rowCount();
     }
 
-    public function updateCustomer($data)
+    public function updateCustomerByUUID($data)
     {
-        $this->db->query("UPDATE tb_customer SET nama_customer=:nama, alamat=:alamat, id_propinsi=:propinsi, id_kota=:kota, no_hp=:nohp, email=:email WHERE id=:id");
-        $this->db->bind('id', (string) $data['id']);
+        $this->db->query("UPDATE tb_customer SET nama_customer=:nama, alamat=:alamat, id_propinsi=:propinsi, id_kota=:kota, no_hp=:nohp, email=:email WHERE uuid=:uuid");
+        $this->db->bind('uuid', (string) $data['uuid']);
         $this->db->bind('nama', $data['txtNamaCustomer']);
         $this->db->bind('alamat', $data['txtAlamat']);
         $this->db->bind('propinsi', $data['selPropinsi']);
@@ -587,9 +587,10 @@ class AdminModel
 
     public function newCustomer($data)
     {
+        $uuid = Auth::long_uuid();
         $password = hash('sha256', $data['txtPassword']);
-        $this->db->query("INSERT INTO `tb_customer` (tanggal_daftar, nama_customer, alamat, id_propinsi, id_kota, no_hp, email,username,password,status) VALUES 
-                                                    (NOW(),:nama_customer,:alamat,:id_propinsi,:id_kota,:no_hp,:email,:username,:password,'1')");
+        $this->db->query("INSERT INTO `tb_customer` (uuid,tanggal_daftar, nama_customer, alamat, id_propinsi, id_kota, no_hp, email,username,password,status) VALUES 
+                                                    (:uuid,NOW(),:nama_customer,:alamat,:id_propinsi,:id_kota,:no_hp,:email,:username,:password,'1')");
         $this->db->bind('nama_customer', $data['txtNamaCustomer']);
         $this->db->bind('alamat', $data['txtAlamat']);
         $this->db->bind('id_propinsi', $data['selPropinsi']);
@@ -598,6 +599,7 @@ class AdminModel
         $this->db->bind('email', $data['txtEmail']);
         $this->db->bind('username', $data['txtUsername']);
         $this->db->bind('password', $password);
+        $this->db->bind('uuid', $uuid);
         $this->db->execute();
         return $this->db->rowCount();
     }
@@ -896,10 +898,10 @@ class AdminModel
         return $db->resultSet();
     }
 
-    public function getCustomerByID($data)
+    public function getCustomerByUUID($data)
     {
-        $this->db->query("SELECT * FROM `tb_customer` WHERE id=:id");
-        $this->db->bind('id', $data);
+        $this->db->query("SELECT * FROM `tb_customer` WHERE uuid=:uuid");
+        $this->db->bind('uuid', $data);
         return $this->db->single();
     }
 

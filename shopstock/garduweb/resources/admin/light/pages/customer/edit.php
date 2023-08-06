@@ -6,7 +6,7 @@
         </div>
         <div class="card-body">
             <form id="frmCustomer" action="<?= BASEURL ?>/admin/customer/action/edit/simpan/" method="POST">
-                <input type="hidden" name="id" value="<?= @$data->customer->id ?>">
+                <input type="hidden" name="uuid" value="<?= @$data->customer->uuid ?>">
                 <div class="row mb-3">
                     <label for="txtNamaCustomer" class="col-sm-2 col-form-label text-nowrap">Nama</label>
                     <div class="col-sm-10">

@@ -25,12 +25,12 @@
                             <td><?= @AdminModel::staticKotaByID($customer->id_kota)->name ?></td>
                             <td>
                                 <div class="text-nowrap">
-                                    <span href="#" class="data-detail" data-id="<?= $customer->id ?>" data-bs-toggle="modal" data-bs-target="#detailMember">
+                                    <span href="#" class="data-detail" data-id="<?= $customer->uuid ?>" data-bs-toggle="modal" data-bs-target="#detailMember">
                                         <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-title="Detail">
                                             <i class="fa-solid fa-address-book"></i>
                                         </a>
                                     </span>
-                                    <a href="<?= BASEURL ?>/admin/customer/edit/?id=<?= $customer->id ?>" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" data-bs-title="Edit">
+                                    <a href="<?= BASEURL ?>/admin/customer/edit/?id=<?= $customer->uuid ?>" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" data-bs-title="Edit">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
                                     <span href="#" title="Confirm" class="data-confirm" data-id="<?= $customer->id ?>" data-bs-toggle="modal" data-bs-target="#modalConfirm">
