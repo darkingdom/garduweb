@@ -100,6 +100,14 @@ class AdminModel
     }
 
 
+    // START (ALGANIA STORE) --------------------
+    public function getPostByUUID($data)
+    {
+        $this->db->query("SELECT * FROM `tb_post` WHERE uuid=:uuid LIMIT 1");
+        $this->db->bind('uuid', (string) $data);
+        return $this->db->single();
+    }    // END (ALGANIA STORE) ----------------------
+
     // END GET =====================================================================================================
 
     // GET ALL =====================================================================================================
@@ -184,7 +192,7 @@ class AdminModel
 
     public function getAllKategoriParent()
     {
-        $this->db->query("SELECT * FROM `tb_kategori` WHERE parent_1='0' ORDER BY `id` DESC");
+        $this->db->query("SELECT * FROM `tb_kategori` WHERE parent_1='0' ORDER BY `kategori` ASC");
         return $this->db->resultSet();
     }
 
@@ -220,6 +228,19 @@ class AdminModel
         $this->db->query("SELECT * FROM `tb_produk` ORDER BY `id` DESC");
         return $this->db->resultSet();
     }
+    // START (ALGANIA STORE) ---------------------------
+    public function getAllMarketplace()
+    {
+        $this->db->query("SELECT * FROM `tb_marketplace`");
+        return $this->db->resultSet();
+    }
+
+    public function getAllPost()
+    {
+        $this->db->query("SELECT * FROM `tb_post` ORDER BY tanggal DESC");
+        return $this->db->resultSet();
+    }
+    // END (ALGANIA STORE) -----------------------------
 
     // END GET ALL =================================================================================================
 
@@ -515,6 +536,57 @@ class AdminModel
         return $this->db->rowCount();
     }
 
+    // START (ALGANIA STORE) ----------------------
+
+    public function updateImagePost($data)
+    {
+        $this->db->query("UPDATE tb_post SET thumbnail=:thumbnail WHERE uuid=:uuid");
+        $this->db->bind('uuid', $data['uuid']);
+        $this->db->bind('thumbnail', $data['thumbnail']);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
+    public function deleteMediaPostByID($data)
+    {
+        $this->db->query("UPDATE tb_post SET thumbnail='' WHERE uuid=:uuid");
+        $this->db->bind('uuid', $data);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
+    public function updatePost($data)
+    {
+        $slug = Slug::textToSlug($data['txtTitle']);
+        $this->db->query("UPDATE tb_post SET title_post=:title, slug='$slug', 
+                                            content=:content,seo_keyword=:seoKeyword,seo_title=:seoTitle,
+                                            seo_description=:seoDescription, id_categories_1=:kategori1,
+                                            id_categories_2=:kategori2, id_categories_3=:kategori3,
+                                            id_categories_4=:kategori4, star_rate=:star, price=:price,
+                                            marketplace=:marketplace, url_affiliate=:url,
+                                            publish=:publish, created_by=:created
+                                            WHERE uuid=:uuid");
+        $this->db->bind('uuid', $data['uuid']);
+        $this->db->bind('title', $data['txtTitle']);
+        $this->db->bind('content', $data['txtContent']);
+        $this->db->bind('seoKeyword', $data['txtKeyword']);
+        $this->db->bind('seoDescription', $data['txtDescription']);
+        $this->db->bind('seoTitle', $data['txtSeoTitle']);
+        $this->db->bind('kategori1', $data['selKategori1']);
+        $this->db->bind('kategori2', $data['selKategori2']);
+        $this->db->bind('kategori3', $data['selKategori3']);
+        $this->db->bind('kategori4', $data['selKategori4']);
+        $this->db->bind('star', $data['txtStar']);
+        $this->db->bind('price', $data['txtPrice']);
+        $this->db->bind('marketplace', $data['txtMarketplace']);
+        $this->db->bind('url', $data['txtURL']);
+        $this->db->bind('publish', $data['txtPublication']);
+        $this->db->bind('created', Session::get('userADM'));
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+    // END (ALGANIA STORE) ------------------------
+
     // END UPDATE DATA =============================================================================================
 
     // CREATE ======================================================================================================
@@ -706,6 +778,16 @@ class AdminModel
         return $this->db->rowCount();
     }
 
+    // START (ALGANIA STORE) ----------------
+    public function simpanNewPost($data)
+    {
+        $this->db->query("INSERT INTO `tb_post` (tanggal, uuid)VALUES(NOW(),:uuid)");
+        $this->db->bind('uuid', $data);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+    // END (ALGANIA STORE) ------------------
+
     // END CREATE ==================================================================================================
 
     // DELETE DATA =================================================================================================
@@ -819,6 +901,23 @@ class AdminModel
         $this->db->execute();
         return $this->db->rowCount();
     }
+
+    // START (ALGANIA STORE) ---------------------
+    public function deletePostByUUID($data)
+    {
+        $this->db->query("DELETE FROM `tb_post` WHERE uuid=:uuid");
+        $this->db->bind('uuid', $data);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
+    public function deletePostBlankTitle()
+    {
+        $this->db->query("DELETE FROM `tb_post` WHERE title_post='' && thumbnail=''");
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+    // END (ALGANIA STORE) -----------------------
     // END DELETE DATA =============================================================================================
 
 

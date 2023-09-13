@@ -1,0 +1,13 @@
+#<Directory /*>
+#    AllowOverwrite on
+#</Directory>
+
+Options -Multiviews -indexes
+RewriteEngine On
+
+# SITEMAP.XML ------------------
+RewriteRule ^sitemap\.xml/?$ sitemap.php
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
