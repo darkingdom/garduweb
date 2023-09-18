@@ -43,7 +43,7 @@ class AdminController extends Controller
                 $admin = $this->model->getAdminByUsername($post['username']);
                 Session::set('loginADM', 'logedIN');
                 Session::set('uidADM', $admin->uuid);
-                Session::set('nameADM', $admin->nama);
+                Session::set('nameADM', $admin->name);
                 Session::set('userADM', $admin->username);
                 $result = $this->page->redirect('admin');
             } else {

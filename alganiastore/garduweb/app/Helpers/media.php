@@ -160,7 +160,7 @@ class Media
 
     static public function uploadThumbnail($data)
     {
-        $newThumb    = 150;
+        $newThumb    = 240;
         $prefixName = 'thumb';
 
         $image = $data['file']['name'];

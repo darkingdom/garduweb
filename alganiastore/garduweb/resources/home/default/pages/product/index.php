@@ -21,7 +21,9 @@
                     </nav>
                     <h1 class="entry-title"><?= $data->item->title_post ?></h1>
                     <div id="post-data">
-                        <div class="post-times">Agustus 23, 2023</div>
+                        <div class="post-times">
+                            <?= date('F d, Y', strtotime($data->item->tanggal)) ?>
+                        </div>
                     </div>
                     <div class="post-body">
                         <?= $data->item->content ?>
@@ -94,5 +96,12 @@
 
     .mytable tr td:nth-child(2n-1) {
         background: #F5F5F5;
+    }
+
+    .post-body {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        color: #414141;
+        font-size: 14px;
+        line-height: 1.6;
     }
 </style>

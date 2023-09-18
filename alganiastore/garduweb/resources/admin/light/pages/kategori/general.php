@@ -1,6 +1,6 @@
-<link rel="stylesheet" href="<?= HOST ?>/vendor/jquery.treeview/1.4/jquery.treeview.css" />
-<script src="<?= HOST ?>/vendor/jquery.treeview/1.4/lib/jquery.cookie.js"></script>
-<script src="<?= HOST ?>/vendor/jquery.treeview/1.4/jquery.treeview.js"></script>
+<link rel="stylesheet" href="<?= VENDOR ?>/vendor/jquery.treeview/1.4/jquery.treeview.css" />
+<script src="<?= VENDOR ?>/vendor/jquery.treeview/1.4/lib/jquery.cookie.js"></script>
+<script src="<?= VENDOR ?>/vendor/jquery.treeview/1.4/jquery.treeview.js"></script>
 <script>
     $(document).ready(function() {
 

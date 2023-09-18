@@ -28,7 +28,7 @@
 
 
     <?php
-    include COMPONENTADM . "/component/atom/modalDelete.php";
+    include "garduweb/resources/admin/light/component/atom/modalDelete.php";
     ?>
 </div>
 

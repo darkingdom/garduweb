@@ -35,6 +35,15 @@ class HomeController extends Controller
         $data['item'] = $this->model->getPostBySlug($page);
         $data['popular'] = $this->model->getAllPopularPost();
         // $data['similar'] = $this->model->getAllPopularPost();
+        $log['ipguest'] = $_SERVER['REMOTE_ADDR'];
+        $log['uuid'] = $data['item']->uuid;
+        $countLogPost = $this->model->countLogPostByIP($log)->total;
+        if ($countLogPost == 0) :
+            $this->model->simpanLogPost($log);
+            $item['uuid'] = $data['item']->uuid;
+            $item['viewer'] = $data['item']->viewer + 1;
+            $this->model->updateViewerItem($item);
+        endif;
         $this->page->product($data);
     }
 

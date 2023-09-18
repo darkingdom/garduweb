@@ -10,7 +10,7 @@
     <div class="dropdown d-flex" id="message">
         <button class="btn-mui" data-bs-toggle="dropdown">
             <i class="fas fa-envelope"></i>
-            <span class="badge bg-danger" style="margin-left: -8px;">5</span>
+            <span class="badge bg-danger" style="margin-left: -8px;"></span>
         </button>
         <div class="dropdown-menu dropdown-menu-end shadow">
             <div class="l-msg-nav d-flex">
@@ -40,7 +40,7 @@
     <div class="dropdown d-flex" id="notify">
         <button class="btn-mui" data-bs-toggle="dropdown">
             <i class="fas fa-bell"></i>
-            <span class="badge bg-danger" style="margin-left: -8px;">10</span>
+            <span class="badge bg-danger" style="margin-left: -8px;"></span>
         </button>
         <div class="dropdown-menu dropdown-menu-end shadow">
 
@@ -75,10 +75,10 @@
         <button class=" btn-mui dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown">
 
             <div class="avatar">
-                <img src="<?= ASSETADM ?>/asset/images/profil1.jpg" alt="" width="40" class="rounded-circle">
+                <img src="<?= BASEURL ?>/garduweb/storage/images/admin-profile.jpg" alt="" width="40" class="rounded-circle">
             </div>
             <div class="avatar-label">
-                Irma Ajarwati
+                <?= Session::get('nameADM') ?>
             </div>
         </button>
 

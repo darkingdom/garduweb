@@ -44,7 +44,7 @@ class HomeModel
 
     public function getAllPostByIdKategori($data)
     {
-        $this->db->query("SELECT * FROM tb_post  WHERE id_categories_1=:kategori LIMIT 0,30");
+        $this->db->query("SELECT * FROM tb_post  WHERE id_categories_1=:kategori OR id_categories_2=:kategori OR id_categories_3=:kategori OR id_categories_4=:kategori LIMIT 0,30");
         $this->db->bind("kategori", (string)$data);
         return $this->db->resultSet();
     }
@@ -58,12 +58,34 @@ class HomeModel
     // END GET ALL =================================================================================================
 
     // COUNT DATA ==================================================================================================
+    public function countLogPostByIP($data)
+    {
+        $today = date('Y-m-d');
+        $this->db->query("SELECT COUNT(*) AS total FROM tb_log_post WHERE ip_guest=:ipguest AND uuid_post=:uuidpost AND tanggal='$today'");
+        $this->db->bind('ipguest', $data['ipguest']);
+        $this->db->bind('uuidpost', $data['uuid']);
+        return $this->db->single();
+    }
     // END COUNT DATA ==============================================================================================
 
     // UPDATE DATA =================================================================================================
+    public function updateViewerItem($data)
+    {
+        $this->db->query("UPDATE tb_post SET viewer=:viewer WHERE uuid=:uuid");
+        $this->db->bind('viewer', (string)$data['viewer']);
+        $this->db->bind('uuid', $data['uuid']);
+        $this->db->execute();
+    }
     // END UPDATE DATA =============================================================================================
 
     // CREATE ======================================================================================================
+    public function simpanLogPost($data)
+    {
+        $this->db->query("INSERT INTO tb_log_post (tanggal,uuid_post,ip_guest) VALUES (NOW(),:uuid,:ipguest)");
+        $this->db->bind('uuid', $data['uuid']);
+        $this->db->bind('ipguest', $data['ipguest']);
+        $this->db->execute();
+    }
     // END CREATE ==================================================================================================
 
     // DELETE DATA =================================================================================================

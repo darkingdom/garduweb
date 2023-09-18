@@ -1,3 +1,3 @@
 <div id="sidebar">
-    <?php include COMPONENTADM . "/component/element/menu-sidebar.php"; ?>
+    <?php include "garduweb/resources/admin/light/component/element/menu-sidebar.php"; ?>
 </div>

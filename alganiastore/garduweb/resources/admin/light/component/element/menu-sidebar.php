@@ -3,7 +3,7 @@
         <h1>ADMIN AREA</h1>
     </div>
 
-    <?php include COMPONENTADM . "/component/element/sidebar/menu-sidebar-left-3.php"; ?>
+    <?php include "garduweb/resources/admin/light/component/element/sidebar/menu-sidebar-left-3.php"; ?>
 
 
 

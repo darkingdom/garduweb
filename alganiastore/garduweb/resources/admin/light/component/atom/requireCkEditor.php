@@ -1,4 +1,4 @@
-<script src="<?= RESOURCE ?>/vendor/ckEditor/ckeditor5-31.0.0/build/ckeditor.js"></script>
+<script src="<?= VENDOR ?>/vendor/ckEditor/ckeditor5-31.0.0/build/ckeditor.js"></script>
 <script>
     ClassicEditor
         .create(document.querySelector('.editor'), {

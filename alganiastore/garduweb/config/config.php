@@ -12,20 +12,16 @@ define('TMP_LOGIN',     "orange");
 define('TMP_LOGINADM',  "gray");
 
 //=========== SHORTCUT URL (SUBWEB)
-define('HOST', baseurl());
-define('PROJECT', "alganiastore");
-define('BASEURL', HOST . '/www/' . PROJECT);
-define('RESOURCE', BASEURL . '/garduweb');
-define('STORAGE', BASEURL . '/garduweb/storage');
-define('COMPONENTADM', "garduweb/resources/admin/" . TMP_ADMIN);
-define('ASSETADM', RESOURCE . "/resources/admin/" . TMP_ADMIN);
+if ($_SERVER['HTTP_HOST'] == "server1.test") :
+    define('HOST', baseurl());
+    define('PROJECT', "alganiastore");
+    define('BASEURL', HOST . '/www/' . PROJECT);
+    define('VENDOR', HOST);
+else :
+    define('BASEURL', baseurl());
+    define('VENDOR', 'https://zizistudio.my.id');
+endif;
 
-//============ MAIN WEB
-// define('BASEURL', baseurl());
-// define('HOST', 'https://serv2.garduweb.com');
-// define('RESOURCE', 'garduweb');
-// define('COMPONENTADM', "garduweb/resources/admin/" . TMP_ADMIN);
-// define('ASSETADM', RESOURCE . "/resources/admin/" . TMP_ADMIN);
 
 define('VERSION_ADM', '1.0.100');
 define('VERSION_MBR', '1.0.100');

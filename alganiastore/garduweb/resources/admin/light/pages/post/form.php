@@ -57,7 +57,7 @@
                                 <?php endif; ?>
                             </div>
                             <div class="mybtn-delete-wrapper">
-                                <button class="btn-media-delete btn btn-danger btn-xsm" style="width: 120px;" data-uuid="<?= $data->post->uuid ?>">delete</button>
+                                <button type="button" class="btn-media-delete btn btn-danger btn-xsm" style="width: 120px;" data-uuid="<?= $data->post->uuid ?>">delete</button>
                             </div>
                         </div>
 
@@ -122,8 +122,8 @@
                         </div>
                         <div class="myform-wrapper">
                             <select class="myform-control" id="txtPublication" name="txtPublication">
-                                <option value="Public" <?php if ($data->post->publication == 'Public') echo "selected"; ?>>Public</option>
-                                <option value="Draft" <?php if ($data->post->publication == 'Draft') echo "selected"; ?>>Draft</option>
+                                <option value="Public" <?php if ($data->post->publish == 'Public') echo "selected"; ?>>Public</option>
+                                <option value="Draft" <?php if ($data->post->publish == 'Draft') echo "selected"; ?>>Draft</option>
                             </select>
                         </div>
                     </div>
@@ -149,11 +149,11 @@
     .mythumb-wrapper {
         width: 120px;
         height: 120px;
-        background-color: red;
         margin: 0 auto;
         border: 1px solid #CCC;
         overflow: hidden;
         border-radius: 5px;
+        display: flex;
     }
 
     .mythumb {

@@ -21,11 +21,11 @@
         </div>
     </div>
 
-    <div class="menu-item">
+    <!-- <div class="menu-item">
         <div class="label-menu-item">
             <a href="<?= BASEURL ?>/admin/brand/general/">Brand</a>
         </div>
-    </div>
+    </div> -->
 
     <div class="menu-item">
         <div class="label-menu-item">

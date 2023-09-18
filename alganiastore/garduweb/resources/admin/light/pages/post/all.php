@@ -30,7 +30,7 @@
                             <td>$<?= $post->price; ?></td>
                             <td>
                                 <?php
-                                if ($post->publication == 'Public') echo "<span class=\"text-success fst-italic\">Public</span>";
+                                if ($post->publish == 'Public') echo "<span class=\"text-success fst-italic\">Public</span>";
                                 else echo "<span class=\"text-danger\">Draft</span>";
                                 ?>
                             </td>
@@ -52,7 +52,7 @@
                 </tbody>
             </table>
             <div class="mt-3">
-                <?php include COMPONENTADM . "/component/atom/modalDelete.php"; ?>
+                <?php include "garduweb/resources/admin/light/component/atom/modalDelete.php"; ?>
             </div>
         </div>
     </div>

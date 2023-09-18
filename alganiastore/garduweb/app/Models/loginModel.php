@@ -58,6 +58,6 @@ class LoginModel
         unset($_SESSION['admin']);
         unset($_SESSION['member']);
         unset($_SESSION['id']);
-        Session::kill();
+        Session::destroyAll();
     }
 }
